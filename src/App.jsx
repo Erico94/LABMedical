@@ -13,7 +13,7 @@ function App() {
   return (
     <>
     <MenuLateral/>
-      <Router>
+      <Router> 
         <Routes>
           <Route path='/' exact element={<Home/>}></Route>
           <Route path='login' element={<Login/>}></Route>
