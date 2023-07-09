@@ -1,0 +1,20 @@
+{
+    "usuarios": [
+        {
+            "id": 1,
+            "email": "alvaresc75@gmail.com",
+            "password": "12345678",
+            "jwt": "jwt_token_user1",
+            "nome" : "Alvares Cunha ",
+            "cpf" : "09874563285",
+            "telefone" : "48998154276",
+            "cep" : "",
+            "rua" : ""
+        },
+        {
+            "email" : "a@a",
+            "senha" : "12345678",
+            "nome": "Ana Maria"
+        }
+    ]
+}

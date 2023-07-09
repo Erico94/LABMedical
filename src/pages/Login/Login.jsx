@@ -1,9 +1,10 @@
+import FormularioLogin from "../../components/Forms/FormularioLogin/FormularioLogin";
 
 
 export default function Login () {
     return(
         <>
-        <h1>Login</h1>
+        <FormularioLogin/>
         </>
     )
 }
