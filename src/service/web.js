@@ -17,6 +17,13 @@ export async function verificaEmail(email) {
     return usuario;
 }
 
+export async function verificaCrmUf(crmUf) {
+  const response = await fetch(`${Url_api}/usuarios`);
+  const usuarios = await response.json();
+  const usuario = usuarios.find(usuario => usuario.crmUf === crmUf);
+  return usuario;
+}
+
 export async function verificaCpf(cpf) {
   const response = await fetch(`${Url_api}/usuarios`);
   const usuarios = await response.json();

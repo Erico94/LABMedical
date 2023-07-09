@@ -4,24 +4,28 @@
 //ao adicinar estilização para as boradas, atentar-se para que tornem iguais apo´s o ref se tornar false
 
 import { useEffect, useRef, useState } from "react";
-import { Post, verificaEmail, verificaCpf } from "../../../service/web";
+import { Post, verificaEmail, verificaCpf, verificaCrmUf } from "../../../service/web";
 
 //talvez incluir telefone e endereço, fazer consulta viacep
 export default function FormularioCadastroUsuario() {
   const [email, setEmail] = useState("");
+  const [crmUf, setCrmUf] = useState("");
   const [password, setPassword] = useState("");
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [errorMail, setErrorMail] = useState(false);
+  const [errorCrmUf, setErrorCrmUf] = useState(false);
   const [errorCpf, setErrorCpf] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
   const emailRef = useRef(null);
+  const crmUfRef = useRef(null);
   const passwordRef = useRef(null);
   const cpfRef = useRef(null);
   const [newUser, setNewUser] = useState({
     nome: "",
     email: "",
+    crmUf:"",
     senha: "",
     cpf: "",
   });
@@ -30,6 +34,11 @@ export default function FormularioCadastroUsuario() {
     setErrorMail(false);
     emailRef.current.style.borderColor = "black";
   }, [email]);
+
+  useEffect(() => {
+    setErrorCrmUf(false);
+    crmUfRef.current.style.borderColor = "black";
+  }, [crmUf]);
 
   useEffect(() => {
     setErrorCpf(false);
@@ -57,6 +66,14 @@ export default function FormularioCadastroUsuario() {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+    setNewUser({
+      ...newUser,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleCrmUfChange = (event) => {
+    setCrmUf(event.target.value);
     setNewUser({
       ...newUser,
       [event.target.name]: event.target.value,
@@ -92,6 +109,15 @@ export default function FormularioCadastroUsuario() {
       console.log("Usuário nao pode ser cadastrado");
       return;
     }
+
+    const responseCrmUf = await verificaCrmUf(crmUf);
+    if (responseCrmUf) {
+      crmUfRef.current.style.borderColor = "red";
+      setErrorCrmUf(true);
+      console.log("Usuário nao pode ser cadastrado");
+      return;
+    }
+
     const responseCpf = await verificaCpf(cpf);
     if (responseCpf) {
       cpfRef.current.style.borderColor = "red";
@@ -123,6 +149,23 @@ export default function FormularioCadastroUsuario() {
           id="nome"
         />
         <br />
+
+        <label htmlFor="CRM-UF">CRM-UF</label>
+        <input
+          required
+          type="text"
+          name="crmUf"
+          value={crmUf}
+          ref={crmUfRef}
+          id="crmUf"
+          minLength={8}
+          maxLength={8}
+          onChange={handleCrmUfChange}
+        />
+        {errorCrmUf && <span>Crm já cadastrado.</span>}
+        <br />
+
+
         <label htmlFor="email">Email</label>
         <input
           required
@@ -130,6 +173,7 @@ export default function FormularioCadastroUsuario() {
           name="email"
           value={email}
           ref={emailRef}
+          id="email"
           onChange={handleEmailChange}
         />
         {errorMail && <span>Email já cadastrado.</span>}
