@@ -8,3 +8,11 @@ export async function login (email,senha){
     
     return usuario;
 }
+
+export async function verificaSeHaCadastro (email){
+    const response = await fetch (`${Url_api}/usuarios`);
+    const usuarios = await response.json();
+    const usuario = usuarios.find(usuario=>usuario.email===email);
+    
+    return usuario;
+}
