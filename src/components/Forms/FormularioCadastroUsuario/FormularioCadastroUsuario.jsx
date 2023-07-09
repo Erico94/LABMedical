@@ -4,24 +4,37 @@
 //ao adicinar estilização para as boradas, atentar-se para que tornem iguais apo´s o ref se tornar false
 
 import { useEffect, useRef, useState } from "react";
-import { Post, verificaSeHaCadastro } from "../../../service/web";
+import { Post, verificaEmail, verificaCpf } from "../../../service/web";
 
 //talvez incluir telefone e endereço, fazer consulta viacep
 export default function FormularioCadastroUsuario() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [errorMail, setErrorMail] = useState(false);
+  const [errorCpf, setErrorCpf] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const [newUser, setNewUser] = useState({ nome: "", email: "", senha: "" });
+  const cpfRef = useRef(null);
+  const [newUser, setNewUser] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+    cpf: "",
+  });
 
   useEffect(() => {
     setErrorMail(false);
     emailRef.current.style.borderColor = "black";
   }, [email]);
+
+  useEffect(() => {
+    setErrorCpf(false);
+    cpfRef.current.style.borderColor = "black";
+  }, [cpf]);
 
   useEffect(() => {
     if (password === passwordRepeat) {
@@ -50,6 +63,14 @@ export default function FormularioCadastroUsuario() {
     });
   };
 
+  const handleCpfChange = (event) => {
+    setCpf(event.target.value);
+    setNewUser({
+      ...newUser,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
     setNewUser({
@@ -64,17 +85,26 @@ export default function FormularioCadastroUsuario() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await verificaSeHaCadastro(email);
-    if (response) {
+    const responseEmail = await verificaEmail(email);
+    if (responseEmail) {
       emailRef.current.style.borderColor = "red";
       setErrorMail(true);
-      console.log("Usuário nao cadastrado");
+      console.log("Usuário nao pode ser cadastrado");
       return;
     }
+    const responseCpf = await verificaCpf(cpf);
+    if (responseCpf) {
+      cpfRef.current.style.borderColor = "red";
+      setErrorCpf(true);
+      console.log("Usuário nao pode ser cadastrado");
+      return;
+    }
+
     async function PostUser() {
-      await Post(newUser).then(e=>console.log
-        (`Usuário cadastrado com sucesso.`));
-        console.log(newUser);
+      await Post(newUser).then((e) =>
+        console.log(`Usuário cadastrado com sucesso.`)
+      );
+      console.log(newUser);
     }
     PostUser();
   };
@@ -105,7 +135,17 @@ export default function FormularioCadastroUsuario() {
         {errorMail && <span>Email já cadastrado.</span>}
         <br />
         <label htmlFor="CPF">CPF</label>
-        <input type="number" name="cpf" id="cpf" />
+        <input
+          required
+          type="number"
+          name="cpf"
+          value={cpf}
+          ref={cpfRef}
+          id="cpf"
+          minLength={11}
+          onChange={handleCpfChange}
+        />
+        {errorCpf && <span>Cpf já cadastrado.</span>}
         <br />
         <label htmlFor="senha">Senha</label>
         <input

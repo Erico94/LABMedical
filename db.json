@@ -12,20 +12,17 @@
       "rua": ""
     },
     {
-      "email": "a@a",
+      "nome": "Érico",
+      "email": "erico@gmil.com",
       "senha": "12345678",
-      "nome": "Ana Maria"
-    },
-    {
-      "nome": "sas",
-      "email": "a@asm",
-      "senha": "00000000",
+      "cpf": "09432568475",
       "id": 2
     },
     {
-      "nome": "sas",
-      "email": "a@asmdd",
-      "senha": "00000000",
+      "nome": "José",
+      "email": "Jose85@gmail.com",
+      "senha": "12345678",
+      "cpf": "09432568478",
       "id": 3
     }
   ]
