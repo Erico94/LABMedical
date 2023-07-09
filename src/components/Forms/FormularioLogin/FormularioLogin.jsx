@@ -36,6 +36,7 @@ export default function FormularioLogin() {
     const usuario = await login(email, senha);
     if(!usuario){
         console.log("Dados inválidos");
+        return;
     }
     Authlogin(usuario);
     navigate("/");
