@@ -28,7 +28,7 @@ export default function MenuLateral() {
           <li>
             <NavLink to="prontuario-pacientes">Prontuário de paciente</NavLink>
           </li>
-          <h2>teste</h2>
+          <h2>Menu lateral</h2>
         </ul>
       </nav>
     </>
