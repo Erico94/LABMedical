@@ -2,27 +2,25 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
-
 //Esconder este menu na página de login!
 
 export default function MenuLateral() {
+  const { AuthLogout } = useContext(AuthContext);
 
-  const {AuthLogout}= useContext(AuthContext);
-
-
-  const handleClick = () =>{
+  const handleClick = () => {
     AuthLogout();
-  }
+  };
 
   return (
     <>
       <nav>
         <ul>
           <li>
+            <button onClick={handleClick}>Sair</button>
+          </li>
+          <li>
             <NavLink to="/">Home</NavLink>
-          </li> 
-          {/* aplicar funcionalidade no botão  logout */}
-          <li><button onClick={handleClick}>Sair</button></li> 
+          </li>
           <li>
             <NavLink to="cadastro-consultas">Cadastrar consulta</NavLink>
           </li>
@@ -33,9 +31,7 @@ export default function MenuLateral() {
             <NavLink to="cadastro-pacientes">Cadastrar paciente</NavLink>
           </li>
           <li>
-             <NavLink to="listagem-prontuarios">
-              Listar prontuário
-            </NavLink>
+            <NavLink to="listagem-prontuarios">Listar prontuário</NavLink>
           </li>
         </ul>
       </nav>

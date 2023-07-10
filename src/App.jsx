@@ -7,17 +7,18 @@ import CadastroExames from "./pages/Cadastros/CadastroExames/CadastroExames";
 import CadastroPacientes from "./pages/Cadastros/CadastroPacientes/CadastroPacientes";
 import ListagemProntuarios from "./pages/Prontuarios/ListagemDeProntuarios/ListagemProntuarios";
 import ProntuarioPacientes from "./pages/Prontuarios/ProntuarioDePacientes/ProntuarioPacientes";
-import FormularioLogin from "./components/Forms/FormularioLogin/FormularioLogin";
-import FormularioCadastroUsuario from "./components/Forms/FormularioCadastroUsuario/FormularioCadastroUsuario";
 import CadastroUsuarios from "./pages/Cadastros/CadastroUsuarios/CadastroUsuarios";
+import Perfil from "./pages/Perfil/Perfil";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import Header from "./components/Header/Header";
 
 function App() {
   const {isLoggedIn} = useContext(AuthContext);
   return (
     <>
       <Router>
+        {isLoggedIn && <Header/>}
         {isLoggedIn && <MenuLateral />}
         <Routes>
           <Route path="/" exact element={isLoggedIn ? <Home/> : <Navigate to='/login'/> }/>
@@ -28,6 +29,7 @@ function App() {
           <Route path='listagem-prontuarios' element={isLoggedIn ? <ListagemProntuarios/> : <Navigate to='/login'/> }/>
           <Route path='prontuario-pacientes' element={isLoggedIn ? <ProntuarioPacientes/> : <Navigate to='/login'/> }/>
           <Route path='cadastro-de-usuario' element={<CadastroUsuarios/>}/>
+          <Route path='perfil-de-usuario' element={isLoggedIn ? <Perfil/> : <Navigate to='/login'/>}/>
         </Routes>
       </Router>
     </>
