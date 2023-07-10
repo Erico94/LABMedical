@@ -10,6 +10,17 @@
       "telefone": "48998154276",
       "cep": "",
       "rua": ""
+    },
+    {
+      "sexo": "masculino",
+      "area": "enfermagem",
+      "nome": "Jhon",
+      "email": "jhon78@live.com",
+      "crmUf": "",
+      "corenUf": "45655-Pr",
+      "senha": "12345678",
+      "cpf": "0214668949",
+      "id": 2
     }
   ]
 }

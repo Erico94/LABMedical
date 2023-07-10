@@ -17,16 +17,19 @@ export default function FormularioCadastroUsuario() {
   const [area, setArea] = useState("");
   const [email, setEmail] = useState("");
   const [crmUf, setCrmUf] = useState("");
+  const [corenUf, setCorenUf] = useState("");
   const [password, setPassword] = useState("");
   const [nome, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [errorMail, setErrorMail] = useState(false);
   const [errorCrmUf, setErrorCrmUf] = useState(false);
+  const [errosCorenUf,setErrorCorenUf] = useState(false);
   const [errorCpf, setErrorCpf] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
   const emailRef = useRef(null);
   const crmUfRef = useRef(null);
+  const corenUfRef = useRef(null);
   const passwordRef = useRef(null);
   const cpfRef = useRef(null);
   const [newUser, setNewUser] = useState({
@@ -35,6 +38,7 @@ export default function FormularioCadastroUsuario() {
     nome: "",
     email: "",
     crmUf: "",
+    corenUf:"",
     senha: "",
     cpf: "",
   });
@@ -42,17 +46,24 @@ export default function FormularioCadastroUsuario() {
   useEffect(() => {
     setErrorMail(false);
     emailRef.current.style.borderColor = "black";
-  }, [email]);
+  }, [setEmail]);
 
   useEffect(() => {
     setErrorCrmUf(false);
-    crmUfRef.current.style.borderColor = "black";
-  }, [crmUf]);
+    if(area === 'medicina')  {crmUfRef.current.style.borderColor = "black";}
+  }, [setCrmUf]);
+
+  useEffect(() => {
+    setErrorCorenUf(false);
+    if(area === 'enfermagem'){
+      corenUfRef.current.style.borderColor = "black";
+    }
+  }, [setCorenUf]);
 
   useEffect(() => {
     setErrorCpf(false);
     cpfRef.current.style.borderColor = "black";
-  }, [cpf]);
+  }, [setCpf]);
 
   useEffect(() => {
     if (password === passwordRepeat) {
@@ -104,6 +115,14 @@ export default function FormularioCadastroUsuario() {
       [event.target.name]: event.target.value,
     });
   };
+  
+  const handleCorenUfChange = (event) => {
+    setCorenUf(event.target.value);
+    setNewUser({
+      ...newUser,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleCpfChange = (event) => {
     setCpf(event.target.value);
@@ -138,6 +157,13 @@ export default function FormularioCadastroUsuario() {
     if (responseCrmUf) {
       crmUfRef.current.style.borderColor = "red";
       setErrorCrmUf(true);
+      console.log("Usuário nao pode ser cadastrado");
+      return;
+    }
+    const responseCorenUf = await verificaCrmUf(corenUf);
+    if (responseCorenUf) {
+      corenUfRef.current.style.borderColor = "red";
+      setErrorCorenUf(true);
       console.log("Usuário nao pode ser cadastrado");
       return;
     }
@@ -221,8 +247,8 @@ export default function FormularioCadastroUsuario() {
         />
         <br />
 
-        <label htmlFor="CRM-UF">CRM-UF</label>
-        <input
+        {area === 'medicina' &&<label htmlFor="CRM-UF">CRM-UF</label>}
+        {area === 'medicina' && <input
           required
           type="text"
           name="crmUf"
@@ -232,7 +258,22 @@ export default function FormularioCadastroUsuario() {
           minLength={8}
           maxLength={8}
           onChange={handleCrmUfChange}
-        />
+        />}
+        {errorCrmUf && <span>Crm já cadastrado.</span>}
+        <br />
+
+        {area === 'enfermagem' &&<label htmlFor="COREN-UF">Coren-UF</label>}
+        {area === 'enfermagem' && <input
+          required
+          type="text"
+          name="corenUf"
+          value={corenUf}
+          ref={corenUfRef}
+          id="corenUf"
+          minLength={8}
+          maxLength={8}
+          onChange={handleCorenUfChange}
+        />}
         {errorCrmUf && <span>Crm já cadastrado.</span>}
         <br />
 
