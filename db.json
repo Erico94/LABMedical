@@ -10,28 +10,6 @@
       "telefone": "48998154276",
       "cep": "",
       "rua": ""
-    },
-    {
-      "nome": "Érico",
-      "email": "erico@gmil.com",
-      "senha": "12345678",
-      "cpf": "09432568475",
-      "id": 2
-    },
-    {
-      "nome": "José",
-      "email": "Jose85@gmail.com",
-      "senha": "12345678",
-      "cpf": "09432568478",
-      "id": 3
-    },
-    {
-      "nome": "Érico Ms",
-      "email": "erico@live.com",
-      "crmUf": "pr-54668",
-      "senha": "01234567",
-      "cpf": "5664215338",
-      "id": 4
     }
   ]
 }

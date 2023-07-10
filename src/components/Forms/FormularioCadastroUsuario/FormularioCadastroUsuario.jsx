@@ -4,14 +4,21 @@
 //ao adicinar estilização para as boradas, atentar-se para que tornem iguais apo´s o ref se tornar false
 
 import { useEffect, useRef, useState } from "react";
-import { Post, verificaEmail, verificaCpf, verificaCrmUf } from "../../../service/web";
+import {
+  Post,
+  verificaEmail,
+  verificaCpf,
+  verificaCrmUf,
+} from "../../../service/web";
 
 //talvez incluir telefone e endereço, fazer consulta viacep
 export default function FormularioCadastroUsuario() {
+  const [sexo, setSexo] = useState("");
+  const [area, setArea] = useState("");
   const [email, setEmail] = useState("");
   const [crmUf, setCrmUf] = useState("");
   const [password, setPassword] = useState("");
-  const [nome, setNome] = useState("");
+  const [nome, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [errorMail, setErrorMail] = useState(false);
@@ -23,9 +30,11 @@ export default function FormularioCadastroUsuario() {
   const passwordRef = useRef(null);
   const cpfRef = useRef(null);
   const [newUser, setNewUser] = useState({
+    sexo: "",
+    area: "",
     nome: "",
     email: "",
-    crmUf:"",
+    crmUf: "",
     senha: "",
     cpf: "",
   });
@@ -56,8 +65,24 @@ export default function FormularioCadastroUsuario() {
     }
   }, [password, passwordRepeat]);
 
-  const handleSetNome = (event) => {
-    setNome(event.target.value);
+  const handleSexoChange = (event) => {
+    setSexo(event.target.value);
+    setNewUser({
+      ...newUser,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleAreaChange = (event) => {
+    setArea(event.target.value);
+    setNewUser({
+      ...newUser,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
     setNewUser({
       ...newUser,
       [event.target.name]: event.target.value,
@@ -109,7 +134,6 @@ export default function FormularioCadastroUsuario() {
       console.log("Usuário nao pode ser cadastrado");
       return;
     }
-
     const responseCrmUf = await verificaCrmUf(crmUf);
     if (responseCrmUf) {
       crmUfRef.current.style.borderColor = "red";
@@ -117,7 +141,6 @@ export default function FormularioCadastroUsuario() {
       console.log("Usuário nao pode ser cadastrado");
       return;
     }
-
     const responseCpf = await verificaCpf(cpf);
     if (responseCpf) {
       cpfRef.current.style.borderColor = "red";
@@ -125,7 +148,6 @@ export default function FormularioCadastroUsuario() {
       console.log("Usuário nao pode ser cadastrado");
       return;
     }
-
     async function PostUser() {
       await Post(newUser).then((e) =>
         console.log(`Usuário cadastrado com sucesso.`)
@@ -139,13 +161,62 @@ export default function FormularioCadastroUsuario() {
     <>
       <h1>Criar conta de usuário:</h1>
       <form onSubmit={handleSubmit}>
+        
+        <br />
+        <label for="masculino" required>
+          <input
+            type="radio"
+            id="masculino"
+            name="sexo"
+            value="masculino"
+            onChange={handleSexoChange}
+          />
+          Masculino |
+        </label>
+
+        <label for="feminino" required>
+          <input
+            type="radio"
+            id="feminino"
+            name="sexo"
+            value="feminino"
+            onChange={handleSexoChange}
+          />
+          Feminino
+        </label>
+
+        <br />
+
+        <label for="medicina">
+          <input
+            type="radio"
+            id="medicina"
+            name="area"
+            value="medicina"
+            onChange={handleAreaChange}
+          />
+          Medicina |
+        </label>
+
+        <label for="medicina">
+          <input
+            type="radio"
+            id="enfermagem"
+            name="area"
+            value="enfermagem"
+            onChange={handleAreaChange}
+          />
+          Enfermagem{" "}
+        </label>
+
+        <br />
         <label htmlFor="nome">Nome completo</label>
         <input
           required
           type="text"
           name="nome"
           value={nome}
-          onChange={handleSetNome}
+          onChange={handleNameChange}
           id="nome"
         />
         <br />
@@ -164,7 +235,6 @@ export default function FormularioCadastroUsuario() {
         />
         {errorCrmUf && <span>Crm já cadastrado.</span>}
         <br />
-
 
         <label htmlFor="email">Email</label>
         <input
