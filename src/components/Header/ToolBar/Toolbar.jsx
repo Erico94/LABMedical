@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useLocation} from "react-router-dom"
+import { useLocation, useNavigate} from "react-router-dom"
 import { AuthContext } from "../../../context/AuthContext";
 import profileIcon from "../../../../Imagens/profileIcon.png"
 import "./styles.css"
@@ -11,9 +11,10 @@ export default function Toolbar(){
     const {usuarioLogado}= useContext(AuthContext);
     const {currentPage} = useContext(PagesContext);
     const navigate = useLocation();
+    const goTo = useNavigate();
 
     const handleProfile = ()=>{
-        navigate ('/perfil-de-usuario')
+        goTo ('/perfil-de-usuario')
     }
     return(
         <div className="toolbar">
