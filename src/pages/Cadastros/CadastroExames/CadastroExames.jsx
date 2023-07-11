@@ -1,8 +1,16 @@
+import { PagesContext } from "../../../context/PagesContext";
+import { useLocation } from "react-router-dom";
+import { useEffect, useContext } from "react";
 
+export default function CadastroExames() {
+  const { PageSetCurrentPage } = useContext(PagesContext);
+  const navigate = useLocation();
+  const pathName = navigate.pathname;
 
-
-
-export default function CadastroPaciente () {
+  useEffect (() => {
+    PageSetCurrentPage(pathName);
+    console.log(pathName);
+  },[]);
     return(
         <>
         <h1>CadastroExames</h1>

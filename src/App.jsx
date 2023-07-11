@@ -11,6 +11,7 @@ import CadastroUsuarios from "./pages/Cadastros/CadastroUsuarios/CadastroUsuario
 import Perfil from "./pages/Perfil/Perfil";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import { PagesProvider } from "./context/PagesContext";
 import Header from "./components/Header/Header";
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
           <Route path='cadastro-pacientes' element={isLoggedIn ? <CadastroPacientes/> : <Navigate to='/login'/> }/>
           <Route path='listagem-prontuarios' element={isLoggedIn ? <ListagemProntuarios/> : <Navigate to='/login'/> }/>
           <Route path='prontuario-pacientes' element={isLoggedIn ? <ProntuarioPacientes/> : <Navigate to='/login'/> }/>
-          <Route path='cadastro-de-usuario' element={<CadastroUsuarios/>}/>
+          <Route path='cadastro-de-usuario' element={!isLoggedIn ? <CadastroUsuarios/> : <Navigate to='/'/>}/>
           <Route path='perfil-de-usuario' element={isLoggedIn ? <Perfil/> : <Navigate to='/login'/>}/>
         </Routes>
       </Router>
