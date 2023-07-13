@@ -10,7 +10,6 @@ import { PagesContext } from "../../../context/PagesContext";
 export default function Toolbar(){
     const {usuarioLogado}= useContext(AuthContext);
     const {currentPage} = useContext(PagesContext);
-    const navigate = useLocation();
     const goTo = useNavigate();
 
     const handleProfile = ()=>{

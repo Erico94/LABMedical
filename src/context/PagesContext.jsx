@@ -9,10 +9,10 @@ export const PagesProvider = ({ children }) => {
     pathName === "/" && setCurrentPage("Página inicial");
     pathName === "/cadastro-consultas" && setCurrentPage("Cadastrar consulta");
     pathName === "/cadastro-exames" && setCurrentPage("Cadastrar exame");
-    pathName === "/cadastro-pacientes" && setCurrentPage("Cadastrar paciente");
+    pathName === "/cadastro-pacientes" && setCurrentPage("Cadastro de paciente");
     pathName === "/listagem-prontuarios" && setCurrentPage("Listagem de prontuários");
     pathName === "/prontuario-pacientes" && setCurrentPage("prontuário de paciente");
-    pathName === "/cadastro-de-usuario" && setCurrentPage("Cadastro de paciente");
+    pathName === "/cadastro-de-usuario" && setCurrentPage("Cadastro de usuário");
     pathName === "/perfil-de-usuario" && setCurrentPage("Perfil de usuário");
     console.log(currentPage);
   };

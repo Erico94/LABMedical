@@ -3,6 +3,7 @@
 //fazer o uso de useRef pra modificar cor das bordas de inputs;
 //ao adicinar estilização para as boradas, atentar-se para que tornem iguais apo´s o ref se tornar false
 //quando clicado na palavra enfermagem o radio de medicina é selecionado, corrigir isso
+//talvez incluir telefone e endereço, fazer consulta viacep
 import { useEffect, useRef, useState } from "react";
 import {
   Post,
@@ -11,9 +12,8 @@ import {
   verificaCrmUf,
 } from "../../../service/web";
 
-//talvez incluir telefone e endereço, fazer consulta viacep
 export default function FormularioCadastroUsuario() {
-  const [sexo, setSexo] = useState("");
+  const [genero, setGenero] = useState("");
   const [area, setArea] = useState("");
   const [email, setEmail] = useState("");
   const [crmUf, setCrmUf] = useState("");
@@ -24,7 +24,7 @@ export default function FormularioCadastroUsuario() {
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [errorMail, setErrorMail] = useState(false);
   const [errorCrmUf, setErrorCrmUf] = useState(false);
-  const [errosCorenUf,setErrorCorenUf] = useState(false);
+  const [errosCorenUf, setErrorCorenUf] = useState(false);
   const [errorCpf, setErrorCpf] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
   const emailRef = useRef(null);
@@ -33,12 +33,12 @@ export default function FormularioCadastroUsuario() {
   const passwordRef = useRef(null);
   const cpfRef = useRef(null);
   const [newUser, setNewUser] = useState({
-    sexo: "",
+    genero: "",
     area: "",
     nome: "",
     email: "",
     crmUf: "",
-    corenUf:"",
+    corenUf: "",
     senha: "",
     cpf: "",
   });
@@ -50,12 +50,14 @@ export default function FormularioCadastroUsuario() {
 
   useEffect(() => {
     setErrorCrmUf(false);
-    if(area === 'medicina')  {crmUfRef.current.style.borderColor = "black";}
+    if (area === "medicina") {
+      crmUfRef.current.style.borderColor = "black";
+    }
   }, [setCrmUf]);
 
   useEffect(() => {
     setErrorCorenUf(false);
-    if(area === 'enfermagem'){
+    if (area === "enfermagem") {
       corenUfRef.current.style.borderColor = "black";
     }
   }, [setCorenUf]);
@@ -76,8 +78,8 @@ export default function FormularioCadastroUsuario() {
     }
   }, [password, passwordRepeat]);
 
-  const handleSexoChange = (event) => {
-    setSexo(event.target.value);
+  const handleGeneroChange = (event) => {
+    setGenero(event.target.value);
     setNewUser({
       ...newUser,
       [event.target.name]: event.target.value,
@@ -115,7 +117,7 @@ export default function FormularioCadastroUsuario() {
       [event.target.name]: event.target.value,
     });
   };
-  
+
   const handleCorenUfChange = (event) => {
     setCorenUf(event.target.value);
     setNewUser({
@@ -150,35 +152,31 @@ export default function FormularioCadastroUsuario() {
     if (responseEmail) {
       emailRef.current.style.borderColor = "red";
       setErrorMail(true);
-      console.log("Usuário nao pode ser cadastrado");
       return;
     }
     const responseCrmUf = await verificaCrmUf(crmUf);
     if (responseCrmUf) {
       crmUfRef.current.style.borderColor = "red";
       setErrorCrmUf(true);
-      console.log("Usuário nao pode ser cadastrado");
       return;
     }
     const responseCorenUf = await verificaCrmUf(corenUf);
     if (responseCorenUf) {
       corenUfRef.current.style.borderColor = "red";
       setErrorCorenUf(true);
-      console.log("Usuário nao pode ser cadastrado");
       return;
     }
     const responseCpf = await verificaCpf(cpf);
     if (responseCpf) {
       cpfRef.current.style.borderColor = "red";
       setErrorCpf(true);
-      console.log("Usuário nao pode ser cadastrado");
       return;
     }
     async function PostUser() {
       await Post(newUser).then((e) =>
         console.log(`Usuário cadastrado com sucesso.`)
       );
-      console.log(newUser);
+      console.log(`${newUser} cadastrado com sucesso.`);
     }
     PostUser();
   };
@@ -187,15 +185,15 @@ export default function FormularioCadastroUsuario() {
     <>
       <h1>Criar conta de usuário:</h1>
       <form onSubmit={handleSubmit}>
-        
         <br />
+        <label htmlFor="genero">Gênero:</label>
         <label for="masculino" required>
           <input
             type="radio"
-            id="masculino"
-            name="sexo"
+            id="genero"
+            name="genero"
             value="masculino"
-            onChange={handleSexoChange}
+            onChange={handleGeneroChange}
           />
           Masculino |
         </label>
@@ -203,10 +201,10 @@ export default function FormularioCadastroUsuario() {
         <label for="feminino" required>
           <input
             type="radio"
-            id="feminino"
-            name="sexo"
+            id="genero"
+            name="genero"
             value="feminino"
-            onChange={handleSexoChange}
+            onChange={handleGeneroChange}
           />
           Feminino
         </label>
@@ -247,33 +245,37 @@ export default function FormularioCadastroUsuario() {
         />
         <br />
 
-        {area === 'medicina' &&<label htmlFor="CRM-UF">CRM-UF</label>}
-        {area === 'medicina' && <input
-          required
-          type="text"
-          name="crmUf"
-          value={crmUf}
-          ref={crmUfRef}
-          id="crmUf"
-          minLength={8}
-          maxLength={8}
-          onChange={handleCrmUfChange}
-        />}
+        {area === "medicina" && <label htmlFor="CRM-UF">CRM-UF</label>}
+        {area === "medicina" && (
+          <input
+            required
+            type="text"
+            name="crmUf"
+            value={crmUf}
+            ref={crmUfRef}
+            id="crmUf"
+            minLength={8}
+            maxLength={8}
+            onChange={handleCrmUfChange}
+          />
+        )}
         {errorCrmUf && <span>Crm já cadastrado.</span>}
         <br />
 
-        {area === 'enfermagem' &&<label htmlFor="COREN-UF">Coren-UF</label>}
-        {area === 'enfermagem' && <input
-          required
-          type="text"
-          name="corenUf"
-          value={corenUf}
-          ref={corenUfRef}
-          id="corenUf"
-          minLength={8}
-          maxLength={8}
-          onChange={handleCorenUfChange}
-        />}
+        {area === "enfermagem" && <label htmlFor="COREN-UF">Coren-UF</label>}
+        {area === "enfermagem" && (
+          <input
+            required
+            type="text"
+            name="corenUf"
+            value={corenUf}
+            ref={corenUfRef}
+            id="corenUf"
+            minLength={8}
+            maxLength={8}
+            onChange={handleCorenUfChange}
+          />
+        )}
         {errorCrmUf && <span>Crm já cadastrado.</span>}
         <br />
 
