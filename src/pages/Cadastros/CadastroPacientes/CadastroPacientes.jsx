@@ -1,4 +1,4 @@
-import PaginaCadastroPacientes from "../../../components/Forms/FormularioCadastroPacientes/PaginaCadastroPacientes";
+import PaginaCadastroPaciente from "../../../components/Forms/FormularioCadastroPacientes/PaginaCadastroPaciente";
 import { PagesContext } from "../../../context/PagesContext";
 import { useLocation } from "react-router-dom";
 import { useEffect, useContext } from "react";
@@ -15,7 +15,7 @@ export default function CadastroPacientes() {
   return (
     <>
       <h1>CadastroPacientes</h1>
-      <PaginaCadastroPacientes />
+      <PaginaCadastroPaciente />
     </>
   );
 }

@@ -4,7 +4,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import CadastroConsultas from "./pages/Cadastros/CadastroConsultas/CadastroConsultas";
 import CadastroExames from "./pages/Cadastros/CadastroExames/CadastroExames";
-import CadastroPacientes from "./pages/Cadastros/CadastroPacientes/CadastroPacientes";
+import CadastroPaciente from "./pages/Cadastros/CadastroPacientes/CadastroPacientes";
 import ListagemProntuarios from "./pages/Prontuarios/ListagemDeProntuarios/ListagemProntuarios";
 import ProntuarioPacientes from "./pages/Prontuarios/ProntuarioDePacientes/ProntuarioPacientes";
 import CadastroUsuarios from "./pages/Cadastros/CadastroUsuarios/CadastroUsuarios";
@@ -26,7 +26,7 @@ function App() {
           <Route path='login' element={!isLoggedIn ? <Login/> : <Navigate to='/home'/>}/>
           <Route path='cadastro-consultas' element={isLoggedIn ? <CadastroConsultas/> : <Navigate to='/login'/> }/>
           <Route path='cadastro-exames' element={isLoggedIn ? <CadastroExames/> : <Navigate to='/login'/> }/>
-          <Route path='cadastro-pacientes' element={isLoggedIn ? <CadastroPacientes/> : <Navigate to='/login'/> }/>
+          <Route path='cadastro-pacientes' element={isLoggedIn ? <CadastroPaciente/> : <Navigate to='/login'/> }/>
           <Route path='listagem-prontuarios' element={isLoggedIn ? <ListagemProntuarios/> : <Navigate to='/login'/> }/>
           <Route path='prontuario-pacientes' element={isLoggedIn ? <ProntuarioPacientes/> : <Navigate to='/login'/> }/>
           <Route path='cadastro-de-usuario' element={!isLoggedIn ? <CadastroUsuarios/> : <Navigate to='/'/>}/>
