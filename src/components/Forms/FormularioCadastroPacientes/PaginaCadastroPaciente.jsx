@@ -1,16 +1,15 @@
-// const formatarData = (data) =>{
-//   var formatado = data.split('-').reverse().join('/');
-//   console.log(formatado);
-// }
-// Endereço: Cep, Cidade, Estado, Logradouro, Número, Complemento, Bairro e Ponto de Referência.
-// Deverá utilizar a API do ViaCEP para buscar os dados de endereço.
-// Deverá apresentar animação ao salvar.
 
-import { useState } from "react";
+// Deverá apresentar animação ao salvar.
+//Terminar o estilo da borda ao retornar o useRef ao normal
+import { verificaCpf } from "../../../service/web";
+import { useRef, useState } from "react";
 import { buscaCep } from "../../../service/Cep";
+import { formatarCPF, formatarTelefone } from "../../../service/Cadastro";
 
 export default function PaginaCadastroPaciente() {
-  // const [cepValido, setCepValido] = useState();
+  const [errorCep, setErrorCep] = useState(false);
+  const [errorCpf, setErrorCpf] = useState(false);
+  const inputRefs = useRef({});
   const [novoPaciente, setNovoPaciente] = useState({
     nome: "",
     genero: "",
@@ -34,18 +33,8 @@ export default function PaginaCadastroPaciente() {
     bairro: "",
     localidade: "",
     uf: "",
+    pontoDeReferencia: "",
   });
-
-  const formatarTelefone = (valor) => {
-    const numero = valor.replace(/\D/g, "");
-    const padrao = /(\d{2})(\d{4,5})(\d{4,5})/;
-
-    if (padrao.test(numero)) {
-      return numero.replace(padrao, "($1) $2-$3");
-    }
-
-    return numero;
-  };
 
   const handleTelefoneChange = (event) => {
     const valor = event.target.value;
@@ -56,25 +45,24 @@ export default function PaginaCadastroPaciente() {
     });
   };
 
-  const formatarCPF = (valor) => {
-    const numero = valor.replace(/\D/g, "");
-    const padrao = /(\d{3})(\d{3})(\d{3})(\d{2})/;
-
-    if (padrao.test(numero)) {
-      return numero.replace(padrao, "$1.$2.$3-$4");
-    }
-
-    return numero;
-  };
-
-  const handleCpfChange = (event) => {
-    const valor = event.target.value;
-    const cpfFormatado = formatarCPF(valor);
+  const handleCpfChange = async (event) => {
+    const cpf = event.target.value;
+    const formatarCpf = formatarCPF(cpf);
     setNovoPaciente({
       ...novoPaciente,
-      [event.target.name]: cpfFormatado,
+      [event.target.name]: formatarCpf,
     });
-    console.log(cpfFormatado);
+
+    const verificarCpf =await verificaCpf("pacientes",formatarCpf);
+    if (verificarCpf){
+      console.log(` CPF ja está cadastrado`);
+      setErrorCpf(true);
+      inputRefs.current.cpf.style.borderColor= 'red';
+      return;
+    }
+    console.log("Cpf pode ser cadastrado");
+    inputRefs.current.cpf.style.borderColor= 'rgb(133, 133, 133)';
+    setErrorCpf(false);
   };
 
   const handleChange = (event) => {
@@ -88,7 +76,6 @@ export default function PaginaCadastroPaciente() {
     event.preventDefault();
     const endereco = await buscaCep(novoPaciente.cep);
     if (!("erro" in endereco)) {
-      // const { logradouro, bairro, localidade, uf } = endereco;
       setNovoPaciente({
         ...novoPaciente,
         logradouro: endereco.logradouro,
@@ -96,22 +83,24 @@ export default function PaginaCadastroPaciente() {
         localidade: endereco.localidade,
         uf: endereco.uf,
       });
-      // setCepValido(true)
+      setErrorCep(false);
       console.log(novoPaciente);
       return;
     }
-    // setNovoPaciente({
-    //   ...novoPaciente,
-    //   [logradouro]: '',
-    //   [bairro]: '',
-    //   [localidade]: '',
-    //   [uf]: '',
-    // });
+    setErrorCep(true);
+    setNovoPaciente({
+      ...novoPaciente,
+      cep: "",
+      logradouro: "",
+      bairro: "",
+      localidade: "",
+      uf: "",
+    });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(novoPaciente);
+    console.log(`Paciente cadastrado com sucesso: ${novoPaciente}.`);
   };
 
   const handleEditarUsuario = () => {
@@ -124,8 +113,13 @@ export default function PaginaCadastroPaciente() {
 
   return (
     <>
-      <button onClick={handleEditarUsuario}>Editar</button>
-      <button onClick={handleApagarUsuario}>Apagar</button>
+      <button disabled onClick={handleEditarUsuario}>
+        Editar
+      </button>
+      <button disabled onClick={handleApagarUsuario}>
+        Apagar
+      </button>
+
       <form onSubmit={handleSubmit}>
         <label htmlFor="nome">Nome completo:</label>
         <input
@@ -140,6 +134,7 @@ export default function PaginaCadastroPaciente() {
           maxLength={64}
         />
         <br />
+
         <label htmlFor="genero">Gênero:</label>
         <select
           required
@@ -148,7 +143,7 @@ export default function PaginaCadastroPaciente() {
           value={novoPaciente.genero}
           onChange={handleChange}
         >
-          <option value="selecione">Selecione</option>
+          <option value="">Selecione</option>
           <option value="masculino">Masculino</option>
           <option value="feminino">Feminino</option>
         </select>
@@ -163,6 +158,7 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="cpf">CPF:</label>
         <input
           required
@@ -174,19 +170,23 @@ export default function PaginaCadastroPaciente() {
           id="cpf"
           value={novoPaciente.cpf}
           onChange={handleCpfChange}
+          ref={(el) => (inputRefs.current.cpf = el)}
         />
+        {errorCpf && <span>CPF já cadastrado no sistema.</span>}
         <br />
-        <label htmlFor="rg">RG:</label>
+
+        <label htmlFor="rg">RG com órgão expeditor:</label>
         <input
           required
           type="text"
           name="rg"
           id="rg"
-          maxLength={20}
+          maxLength={7}
           value={novoPaciente.rg}
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="estadoCivil">Estado civil:</label>
         <select
           required
@@ -195,7 +195,7 @@ export default function PaginaCadastroPaciente() {
           value={novoPaciente.estadoCivil}
           onChange={handleChange}
         >
-          <option value="selecione">Selecione</option>
+          <option value="">Selecione</option>
           <option value="solteiro">Solteiro</option>
           <option value="casado">Casado</option>
           <option value="divorciado">Divorciado</option>
@@ -203,6 +203,7 @@ export default function PaginaCadastroPaciente() {
           <option value="viuvo">Viúvo</option>
         </select>
         <br />
+
         <label htmlFor="telefone">Telefone:</label>
         <input
           required
@@ -216,6 +217,7 @@ export default function PaginaCadastroPaciente() {
           placeholder="(xx) xxxxx-xxxx"
         />
         <br />
+
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -225,6 +227,7 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="naturalidade">Naturalidade</label>
         <input
           required
@@ -237,6 +240,7 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="contatoDeEmergencia">Contato de emergência</label>
         <input
           required
@@ -250,6 +254,7 @@ export default function PaginaCadastroPaciente() {
           placeholder="(xx) xxxxx-xxxx"
         />
         <br />
+
         <label htmlFor="alergias">Alergias</label>
         <input
           type="text"
@@ -259,6 +264,7 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="cuidadosEspecificos">Cuidados específicos</label>
         <input
           type="text"
@@ -268,6 +274,7 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="convenio">Convênio</label>
         <input
           type="text"
@@ -277,6 +284,7 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="numeroDoConvenio">Número do convênio</label>
         <input
           type="number"
@@ -286,6 +294,7 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="validadeDoConvenio">Validade do convênio</label>
         <input
           type="date"
@@ -295,8 +304,10 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
         />
         <br />
+
         <label htmlFor="cep">Cep</label>
         <input
+          required
           type="text"
           name="cep"
           id="cep"
@@ -304,63 +315,70 @@ export default function PaginaCadastroPaciente() {
           onChange={handleChange}
           maxLength={8}
         />
-        {/* {!cepValido && <span>Insira um cep válido</span>} */}
+        {errorCep && <span>Insira um cep válido</span>}
         <button onClick={handleBuscaCep}>Buscar cep</button>
         <br />
         <label htmlFor="logradouro">Rua</label>
         <input
-        disabled
+          disabled
           type="text"
           id="logradouro"
           name="logradouro"
           value={novoPaciente.logradouro}
         />
         <br />
+
         <label htmlFor="bairro">Bairro</label>
         <input
-        disabled
+          disabled
           type="text"
           id="bairro"
           name="bairro"
           value={novoPaciente.bairro}
         />
         <br />
+
         <label htmlFor="localidade">Cidade</label>
-         <input
-         disabled
+        <input
+          disabled
           type="text"
           id="localidade"
           name="localidade"
           value={novoPaciente.localidade}
         />
         <br />
+
         <label htmlFor="uf">Estado</label>
-         <input
-         disabled
-          type="text"
-          id="uf"
-          name="uf"
-          value={novoPaciente.uf}
-        />
+        <input disabled type="text" id="uf" name="uf" value={novoPaciente.uf} />
         <br />
         <label htmlFor="numero">Número</label>
         <input
-          type="text"
+          required
+          type="number"
           id="numero"
           name="numero"
           value={novoPaciente.numero}
         />
-      <br />
-      <label htmlFor="complemento">Complemento</label>
-      <input
+        <br />
+
+        <label htmlFor="complemento">Complemento</label>
+        <input
           type="text"
           id="complemento"
           name="complemento"
           value={novoPaciente.complemento}
         />
-      <br />
+        <label htmlFor="pontoDeReferencia">Ponto de referência</label>
+        <input
+          type="text"
+          id="pontoDeReferencia"
+          name="pontoDeReferencia"
+          value={novoPaciente.pontoDeReferencia}
+        />
+        <br />
+
+        <button type="submit">Enviar</button>
       </form>
-      <button type="submit">Enviar</button>
     </>
   );
 }

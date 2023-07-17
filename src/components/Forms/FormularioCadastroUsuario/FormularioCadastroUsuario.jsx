@@ -1,9 +1,9 @@
-//fazer verificação das senhas se coincidem
+//colocar maxLength no cpf e fazer formatação
 //salvar usuario no Json ou localStorage
-//fazer o uso de useRef pra modificar cor das bordas de inputs;
 //ao adicinar estilização para as boradas, atentar-se para que tornem iguais apo´s o ref se tornar false
 //quando clicado na palavra enfermagem o radio de medicina é selecionado, corrigir isso
-//talvez incluir telefone e endereço, fazer consulta viacep
+//tem muita funão duplicada aqui
+//posso mudar os useRefs para inputRefs
 import { useEffect, useRef, useState } from "react";
 import {
   Post,

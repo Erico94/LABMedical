@@ -24,8 +24,8 @@ export async function verificaCrmUf(crmUf) {
   return usuario;
 }
 
-export async function verificaCpf(cpf) {
-  const response = await fetch(`${Url_api}/usuarios`);
+export async function verificaCpf(ondVerificar,cpf) {
+  const response = await fetch(`${Url_api}/${ondVerificar}`);
   const usuarios = await response.json();
   const usuario = usuarios.find(usuario => usuario.cpf === cpf);
   return usuario;
