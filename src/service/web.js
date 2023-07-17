@@ -31,10 +31,10 @@ export async function verificaCpf(ondVerificar,cpf) {
   return usuario;
 }
 
-export async function Post( data ) {
+export async function Post( ondePostar,data ) {
     const user = JSON.stringify(data);
     console.log(data);
-    fetch(`${Url_api}/usuarios`, {
+    fetch(`${Url_api}/${ondePostar}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: user

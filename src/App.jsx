@@ -4,10 +4,10 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import CadastroConsultas from "./pages/Cadastros/CadastroConsultas/CadastroConsultas";
 import CadastroExames from "./pages/Cadastros/CadastroExames/CadastroExames";
-import CadastroPaciente from "./pages/Cadastros/CadastroPacientes/CadastroPacientes";
+import CadastroPaciente from "./pages/Cadastros/CadastroPacientes/CadastroPaciente";
 import ListagemProntuarios from "./pages/Prontuarios/ListagemDeProntuarios/ListagemProntuarios";
 import ProntuarioPacientes from "./pages/Prontuarios/ProntuarioDePacientes/ProntuarioPacientes";
-import CadastroUsuarios from "./pages/Cadastros/CadastroUsuarios/CadastroUsuarios";
+import CadastroUsuario from "./pages/Cadastros/CadastroUsuario/CadastroUsuario";
 import Perfil from "./pages/Perfil/Perfil";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
@@ -29,7 +29,7 @@ function App() {
           <Route path='cadastro-pacientes' element={isLoggedIn ? <CadastroPaciente/> : <Navigate to='/login'/> }/>
           <Route path='listagem-prontuarios' element={isLoggedIn ? <ListagemProntuarios/> : <Navigate to='/login'/> }/>
           <Route path='prontuario-pacientes' element={isLoggedIn ? <ProntuarioPacientes/> : <Navigate to='/login'/> }/>
-          <Route path='cadastro-de-usuario' element={!isLoggedIn ? <CadastroUsuarios/> : <Navigate to='/'/>}/>
+          <Route path='cadastro-de-usuario' element={!isLoggedIn ? <CadastroUsuario/> : <Navigate to='/'/>}/>
           <Route path='perfil-de-usuario' element={isLoggedIn ? <Perfil/> : <Navigate to='/login'/>}/>
         </Routes>
       </Router>

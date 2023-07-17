@@ -4,6 +4,7 @@
 //quando clicado na palavra enfermagem o radio de medicina é selecionado, corrigir isso
 //tem muita funão duplicada aqui
 //posso mudar os useRefs para inputRefs
+// colocar o foco automatico no nome de usuario ao ir pra login
 import { useEffect, useRef, useState } from "react";
 import {
   Post,
@@ -12,7 +13,7 @@ import {
   verificaCrmUf,
 } from "../../../service/web";
 
-export default function FormularioCadastroUsuario() {
+export default function CadastroUsuario() {
   const [genero, setGenero] = useState("");
   const [area, setArea] = useState("");
   const [email, setEmail] = useState("");
@@ -173,7 +174,7 @@ export default function FormularioCadastroUsuario() {
       return;
     }
     async function PostUser() {
-      await Post(newUser).then((e) =>
+      await Post('usuarios',newUser).then(() =>
         console.log(`Usuário cadastrado com sucesso.`)
       );
       console.log(`${newUser} cadastrado com sucesso.`);
@@ -190,7 +191,7 @@ export default function FormularioCadastroUsuario() {
         <label for="masculino" required>
           <input
             type="radio"
-            id="genero"
+            id="masculino"
             name="genero"
             value="masculino"
             onChange={handleGeneroChange}
@@ -201,16 +202,16 @@ export default function FormularioCadastroUsuario() {
         <label for="feminino" required>
           <input
             type="radio"
-            id="genero"
+            id="feminino"
             name="genero"
             value="feminino"
             onChange={handleGeneroChange}
           />
           Feminino
         </label>
-
         <br />
 
+        <label for="area">Área de atuação:</label>
         <label for="medicina">
           <input
             type="radio"
@@ -222,7 +223,7 @@ export default function FormularioCadastroUsuario() {
           Medicina |
         </label>
 
-        <label for="medicina">
+        <label for="enfermagem">
           <input
             type="radio"
             id="enfermagem"
@@ -236,6 +237,7 @@ export default function FormularioCadastroUsuario() {
         <br />
         <label htmlFor="nome">Nome completo</label>
         <input
+        autoFocus
           required
           type="text"
           name="nome"

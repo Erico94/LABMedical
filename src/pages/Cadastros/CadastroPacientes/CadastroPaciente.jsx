@@ -1,12 +1,18 @@
 
 // Deverá apresentar animação ao salvar.
 //Terminar o estilo da borda ao retornar o useRef ao normal
-import { verificaCpf } from "../../../service/web";
-import { useRef, useState } from "react";
+//Se der tempo, fazer função que separa cada alergia/cuidado por vírgula e joga em um array para salvar.
+import { verificaCpf, Post } from "../../../service/web";
+import { useRef, useState, useEffect, useContext } from "react";
 import { buscaCep } from "../../../service/Cep";
 import { formatarCPF, formatarTelefone } from "../../../service/Cadastro";
+import { PagesContext } from "../../../context/PagesContext";
+import { useLocation } from "react-router-dom";
 
-export default function PaginaCadastroPaciente() {
+export default function CadastroPaciente() {
+  const { PageSetCurrentPage } = useContext(PagesContext);
+  const navigate = useLocation();
+  const pathName = navigate.pathname;
   const [errorCep, setErrorCep] = useState(false);
   const [errorCpf, setErrorCpf] = useState(false);
   const inputRefs = useRef({});
@@ -35,6 +41,11 @@ export default function PaginaCadastroPaciente() {
     uf: "",
     pontoDeReferencia: "",
   });
+
+  useEffect(() => {
+    PageSetCurrentPage(pathName);
+    console.log(pathName);
+  }, []);
 
   const handleTelefoneChange = (event) => {
     const valor = event.target.value;
@@ -98,9 +109,12 @@ export default function PaginaCadastroPaciente() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit =async (event) => {
     event.preventDefault();
     console.log(`Paciente cadastrado com sucesso: ${novoPaciente}.`);
+      await Post('pacientes',novoPaciente).then(() =>
+        console.log(`Usuário cadastrado com sucesso. ${novoPaciente}`)
+      );
   };
 
   const handleEditarUsuario = () => {
@@ -351,13 +365,15 @@ export default function PaginaCadastroPaciente() {
         <label htmlFor="uf">Estado</label>
         <input disabled type="text" id="uf" name="uf" value={novoPaciente.uf} />
         <br />
+        
         <label htmlFor="numero">Número</label>
         <input
           required
-          type="number"
+          type="text"
           id="numero"
           name="numero"
           value={novoPaciente.numero}
+          onChange={handleChange}
         />
         <br />
 
@@ -367,6 +383,7 @@ export default function PaginaCadastroPaciente() {
           id="complemento"
           name="complemento"
           value={novoPaciente.complemento}
+          onChange={handleChange}
         />
         <label htmlFor="pontoDeReferencia">Ponto de referência</label>
         <input
@@ -374,6 +391,7 @@ export default function PaginaCadastroPaciente() {
           id="pontoDeReferencia"
           name="pontoDeReferencia"
           value={novoPaciente.pontoDeReferencia}
+          onChange={handleChange}
         />
         <br />
 
