@@ -1,13 +1,15 @@
 
+//ver se ainda esta exibindo o alert de erro e sucesso na mesma hora.
 // Deverá apresentar animação ao salvar.
 //Terminar o estilo da borda ao retornar o useRef ao normal
 //Se der tempo, fazer função que separa cada alergia/cuidado por vírgula e joga em um array para salvar.
-import { verificaCpf, Post } from "../../../service/web";
-import { useRef, useState, useEffect, useContext } from "react";
+
 import { buscaCep } from "../../../service/Cep";
-import { formatarCPF, formatarTelefone } from "../../../service/Cadastro";
+import { verificaCpf, Post } from "../../../service/web";
 import { PagesContext } from "../../../context/PagesContext";
+import { formatarCPF, formatarTelefone } from "../../../service/Cadastro";
 import { useLocation } from "react-router-dom";
+import { useRef, useState, useEffect, useContext } from "react";
 
 export default function CadastroPaciente() {
   const { PageSetCurrentPage } = useContext(PagesContext);
@@ -111,10 +113,9 @@ export default function CadastroPaciente() {
 
   const handleSubmit =async (event) => {
     event.preventDefault();
-    console.log(`Paciente cadastrado com sucesso: ${novoPaciente}.`);
       await Post('pacientes',novoPaciente).then(() =>
-        console.log(`Usuário cadastrado com sucesso. ${novoPaciente}`)
-      );
+      alert("Paciente cadastrado com sucesso")
+      ).catch(alert("Erro ao inserir paciente na base de dados."));
   };
 
   const handleEditarUsuario = () => {

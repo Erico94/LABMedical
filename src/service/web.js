@@ -1,5 +1,6 @@
 
 
+
 const Url_api = 'http://localhost:3000';
 
 export async function login(email, senha) {
@@ -32,12 +33,13 @@ export async function verificaCpf(ondVerificar,cpf) {
 }
 
 export async function Post( ondePostar,data ) {
-    const user = JSON.stringify(data);
+    const dados = JSON.stringify(data);
     console.log(data);
+    console.log(dados);
     fetch(`${Url_api}/${ondePostar}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: user
+        body: dados
     }).then(function (response) {
         if (response.ok) {
             console.log('Post criado com sucesso!');
@@ -48,4 +50,14 @@ export async function Post( ondePostar,data ) {
         .catch(function (error) {
             console.log('Erro na solicitação:', error.message);
         });
+}
+
+export async function filtrarPacientes(termoBuscado) {
+    var getAll = [];
+    const response = await fetch(`${Url_api}/pacientes`).then((data)=>data.json());
+    response.map((item)=>{
+        getAll.push(item);
+    })
+    const filtro = getAll.filter(item=>item.nome.toLocaleLowerCase().includes(termoBuscado.toLocaleLowerCase()));
+    return filtro;
 }

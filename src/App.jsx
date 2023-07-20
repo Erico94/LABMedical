@@ -11,7 +11,6 @@ import CadastroUsuario from "./pages/Cadastros/CadastroUsuario/CadastroUsuario";
 import Perfil from "./pages/Perfil/Perfil";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
-import { PagesProvider } from "./context/PagesContext";
 import Header from "./components/Header/Header";
 
 function App() {
