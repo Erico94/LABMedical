@@ -6,12 +6,12 @@ export const PagesProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState("");
 
   const PageSetCurrentPage = (pathName) => {
-    pathName === "/" && setCurrentPage("Página inicial");
-    pathName === "/cadastro-consultas" && setCurrentPage("Cadastrar consulta");
-    pathName === "/cadastro-exames" && setCurrentPage("Cadastrar exame");
-    pathName === "/cadastro-pacientes" && setCurrentPage("Cadastro de paciente");
-    pathName === "/listagem-prontuarios" && setCurrentPage("Listagem de prontuários");
-    pathName === "/prontuario-pacientes" && setCurrentPage("prontuário de paciente");
+    pathName === "/" && setCurrentPage("Home");
+    pathName === "/cadastro-consulta" && setCurrentPage("Cadastrar consulta");
+    pathName === "/cadastro-exame" && setCurrentPage("Cadastrar exame");
+    pathName === "/cadastro-paciente" && setCurrentPage("Cadastrar paciente");
+    pathName === "/prontuarios" && setCurrentPage("Prontuários");
+    pathName === "/prontuario-paciente" && setCurrentPage("prontuário de paciente");
     pathName === "/cadastro-de-usuario" && setCurrentPage("Cadastro de usuário");
     pathName === "/perfil-de-usuario" && setCurrentPage("Perfil de usuário");
     console.log(currentPage);

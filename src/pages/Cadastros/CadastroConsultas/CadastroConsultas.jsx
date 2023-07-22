@@ -7,7 +7,8 @@ import FormularioDeCadastroDeConsulta from "../../../components/FormularioConsul
 
 
 //apresentar animação ao salvar
-//descobrir pq que as vzes não salva na primeira submissão
+//descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
+//pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
 export default function CadastroConsultas() {
   const { PageSetCurrentPage } = useContext(PagesContext);
   const navigate = useLocation();
@@ -45,11 +46,9 @@ export default function CadastroConsultas() {
     const ObterHora = ()=>{
       const agora = new Date();
       const horaFormatada = agora.toTimeString().slice(0,5);
-      console.log(horaFormatada);
       setTime(horaFormatada);
     }
     ObterHora();
-    console.log(time);
     setNovaConsulta({
       ...novaConsulta,
       nomeDoPaciente : pacienteSelecionado.nome,
@@ -69,15 +68,32 @@ export default function CadastroConsultas() {
     });
   };
 
+  const LimparPaciente = () =>{
+    setPacienteSelecinado({});
+  }
+
+  const LimparConsulta =()=>{
+    setNovaConsulta({
+      motivoDaConsulta: "",
+    dataDaConsulta: "",
+    horaDaConsulta: "",
+    descricaoDoProblema: "",
+    medicacaoReceitada: "",
+    dosagemEprecaucoes: "",
+    nomeDoPaciente : "",
+    idDoPaciente : 0,
+    })
+  }
+
   const handleSubmit =async () =>{
-    console.log(pacienteSelecionado.nome);
     await Post('consultas', novaConsulta);
+    LimparConsulta();
+    LimparPaciente();
+    setFoiSelecionado(false);
 
   }
 
   const selecaoDePaciente = (paciente) => {
-    console.log("deu certo");
-    console.log(paciente);
     setFoiSelecionado(true);
     setPacienteSelecinado(paciente);
   };
@@ -88,6 +104,7 @@ export default function CadastroConsultas() {
       <>
         <label htmlFor="nomeOuId">Nome ou id:</label>
         <input
+          autoFocus
           type="text"
           name="nomeOuId"
           id="nomeOuId"

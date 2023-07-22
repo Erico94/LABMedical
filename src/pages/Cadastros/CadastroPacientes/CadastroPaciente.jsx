@@ -3,6 +3,8 @@
 // Deverá apresentar animação ao salvar.
 //Terminar o estilo da borda ao retornar o useRef ao normal
 //Se der tempo, fazer função que separa cada alergia/cuidado por vírgula e joga em um array para salvar.
+//descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
+//pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
 
 import { buscaCep } from "../../../service/Cep";
 import { verificaCpf, Post } from "../../../service/web";
@@ -68,12 +70,12 @@ export default function CadastroPaciente() {
 
     const verificarCpf =await verificaCpf("pacientes",formatarCpf);
     if (verificarCpf){
-      console.log(` CPF ja está cadastrado`);
+      alert(` CPF ja está cadastrado`);
       setErrorCpf(true);
       inputRefs.current.cpf.style.borderColor= 'red';
       return;
     }
-    console.log("Cpf pode ser cadastrado");
+    alert("Cpf pode ser cadastrado");
     inputRefs.current.cpf.style.borderColor= 'rgb(133, 133, 133)';
     setErrorCpf(false);
   };
@@ -97,7 +99,6 @@ export default function CadastroPaciente() {
         uf: endereco.uf,
       });
       setErrorCep(false);
-      console.log(novoPaciente);
       return;
     }
     setErrorCep(true);

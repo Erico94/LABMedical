@@ -5,6 +5,8 @@
 //tem muita funão duplicada aqui
 //posso mudar os useRefs para inputRefs
 // colocar o foco automatico no nome de usuario ao ir pra login
+//descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
+//pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
 import { useEffect, useRef, useState } from "react";
 import {
   Post,
@@ -175,9 +177,8 @@ export default function CadastroUsuario() {
     }
     async function PostUser() {
       await Post('usuarios',newUser).then(() =>
-        console.log(`Usuário cadastrado com sucesso.`)
+        alert(`Usuário cadastrado com sucesso.`)
       );
-      console.log(`${newUser} cadastrado com sucesso.`);
     }
     PostUser();
   };

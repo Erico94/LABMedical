@@ -6,7 +6,8 @@ import FormularioDeCadastroDeExame from "../../../components/FormularioExame/For
 
 // Talvez criar uma página de "solicitação concluida com sucesso" que aparece após algum cadastro e com botões para retornar à pagina inicial.
 //apresentar animação ao salvar
-//descobrir pq que as vzes não salva na primeira submissão... Já erifiquei e aparentemente parece ser um bug do json server.
+//descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
+//pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
 export default function CadastroExames() {
   const { PageSetCurrentPage } = useContext(PagesContext);
   const navigate = useLocation();
@@ -14,7 +15,7 @@ export default function CadastroExames() {
   const [termoBuscado, setTermoBuscado] = useState("");
   const [itensFiltrados, setItensFiltrados] = useState([]);
   const [foiSelecionado, setFoiSelecionado] = useState(false);
-  const [pacienteSelecionado, setPacienteSelecinado] = useState({});
+  const [pacienteSelecionado, setPacienteSelecionado] = useState({});
   const [time, setTime] = useState('');
   const [novoExame, setNovoExame] = useState({
     nomeDoExame: "",
@@ -34,7 +35,7 @@ export default function CadastroExames() {
   },[]);
 
 
-  //editar
+  
   useEffect(() => {
     async function FiltrarPacientes() {
       const pacientes = await filtrarPacientes(termoBuscado);
@@ -70,7 +71,7 @@ export default function CadastroExames() {
   };
 
   const LimparPaciente = () =>{
-    setPacienteSelecinado({});
+    setPacienteSelecionado({});
   }
 
   const LimparExame =()=>{
@@ -89,7 +90,6 @@ export default function CadastroExames() {
 
   const handleSubmit =async () =>{
     await Post('exames', novoExame);
-    console.log(novoExame);
     LimparExame();
     LimparPaciente();
     setFoiSelecionado(false);
@@ -98,7 +98,7 @@ export default function CadastroExames() {
 
   const selecaoDePaciente = (paciente) => {
     setFoiSelecionado(true);
-    setPacienteSelecinado(paciente);
+    setPacienteSelecionado(paciente);
   };
 
 
@@ -107,6 +107,7 @@ export default function CadastroExames() {
       <>
         <label htmlFor="nomeOuId">Nome ou id:</label>
         <input
+          autoFocus
           type="text"
           name="nomeOuId"
           id="nomeOuId"
@@ -124,7 +125,7 @@ export default function CadastroExames() {
       {/* {foiSelecionado && <button>Salvar</button>} */}
 
       {!foiSelecionado && (
-        <h3>Selecione um paciente para cadastrar uma nova exame. </h3>
+        <h3>Selecione um paciente para cadastrar um novo exame. </h3>
       )}
       {!foiSelecionado && inputDeBuscaDePaciente()}
       <br />

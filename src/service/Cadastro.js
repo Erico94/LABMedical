@@ -22,6 +22,5 @@ export const formatarCPF = (valor) => {
 
   export const formatarData = (data) =>{
   var dataFormatada = data.split('-').reverse().join('/');
-  console.log(dataFormatada);
   return dataFormatada;
 }

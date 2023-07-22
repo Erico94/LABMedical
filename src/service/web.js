@@ -34,21 +34,19 @@ export async function verificaCpf(ondVerificar,cpf) {
 
 export async function Post( ondePostar,data ) {
     const dados = JSON.stringify(data);
-    console.log(data);
-    console.log(dados);
     fetch(`${Url_api}/${ondePostar}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: dados
     }).then(function (response) {
         if (response.ok) {
-            console.log('Post criado com sucesso!');
+            alert("Solicitação bem sucedida.")
         } else {
-            console.log('Erro ao criar o post.');
+            alert('Erro ao criar o post.');
         }
     })
         .catch(function (error) {
-            console.log('Erro na solicitação:', error.message);
+            alert('Erro na solicitação:', error.message);
         });
 }
 
@@ -59,5 +57,17 @@ export async function filtrarPacientes(termoBuscado) {
         getAll.push(item);
     })
     const filtro = getAll.filter(item=>item.nome.toLocaleLowerCase().includes(termoBuscado.toLocaleLowerCase()));
+    return filtro;
+}
+
+export async function GetAllExamesOuConsultas (ondeBuscar, id){
+    var getAll= [];
+    const response = await fetch(`${Url_api}/${ondeBuscar}`).then((data)=>data.json());
+    response.map((item)=>{
+        getAll.push(item)
+    })
+    const filtro = getAll.filter(
+        (item) => item.idDoPaciente === id
+      );
     return filtro;
 }

@@ -20,19 +20,19 @@ export default function MenuLateral() {
             <button onClick={handleClick}>Sair</button>
           </li>
           <li>
-            <NavLink to="/">Página inicial</NavLink>
+            <NavLink to="/">Início</NavLink>
           </li>
           <li>
-            <NavLink to="cadastro-consultas">Cadastrar consulta</NavLink>
+            <NavLink to="cadastro-consulta">Cadastrar consulta</NavLink>
           </li>
           <li>
-            <NavLink to="cadastro-exames">Cadastrar exame</NavLink>
+            <NavLink to="cadastro-exame">Cadastrar exame</NavLink>
           </li>
           <li>
-            <NavLink to="cadastro-pacientes">Cadastrar paciente</NavLink>
+            <NavLink to="cadastro-paciente">Cadastrar paciente</NavLink>
           </li>
           <li>
-            <NavLink to="listagem-prontuarios">Listar prontuário</NavLink>
+            <NavLink to="prontuarios">Prontuários</NavLink>
           </li>
         </ul>
       </nav>

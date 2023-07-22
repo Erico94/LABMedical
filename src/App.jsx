@@ -6,7 +6,7 @@ import CadastroConsultas from "./pages/Cadastros/CadastroConsultas/CadastroConsu
 import CadastroExames from "./pages/Cadastros/CadastroExames/CadastroExames";
 import CadastroPaciente from "./pages/Cadastros/CadastroPacientes/CadastroPaciente";
 import ListagemProntuarios from "./pages/Prontuarios/ListagemDeProntuarios/ListagemProntuarios";
-import ProntuarioPacientes from "./pages/Prontuarios/ProntuarioDePacientes/ProntuarioPacientes";
+import ProntuarioPaciente from "./pages/Prontuarios/ProntuarioDePacientes/ProntuarioPaciente";
 import CadastroUsuario from "./pages/Cadastros/CadastroUsuario/CadastroUsuario";
 import Perfil from "./pages/Perfil/Perfil";
 import { useContext } from "react";
@@ -23,11 +23,11 @@ function App() {
         <Routes>
           <Route path="/" exact element={isLoggedIn ? <Home/> : <Navigate to='/login'/> }/>
           <Route path='login' element={!isLoggedIn ? <Login/> : <Navigate to='/home'/>}/>
-          <Route path='cadastro-consultas' element={isLoggedIn ? <CadastroConsultas/> : <Navigate to='/login'/> }/>
-          <Route path='cadastro-exames' element={isLoggedIn ? <CadastroExames/> : <Navigate to='/login'/> }/>
-          <Route path='cadastro-pacientes' element={isLoggedIn ? <CadastroPaciente/> : <Navigate to='/login'/> }/>
-          <Route path='listagem-prontuarios' element={isLoggedIn ? <ListagemProntuarios/> : <Navigate to='/login'/> }/>
-          <Route path='prontuario-pacientes' element={isLoggedIn ? <ProntuarioPacientes/> : <Navigate to='/login'/> }/>
+          <Route path='cadastro-consulta' element={isLoggedIn ? <CadastroConsultas/> : <Navigate to='/login'/> }/>
+          <Route path='cadastro-exame' element={isLoggedIn ? <CadastroExames/> : <Navigate to='/login'/> }/>
+          <Route path='cadastro-paciente' element={isLoggedIn ? <CadastroPaciente/> : <Navigate to='/login'/> }/>
+          <Route path='prontuarios' element={isLoggedIn ? <ListagemProntuarios/> : <Navigate to='/login'/> }/>
+          <Route path='prontuario-paciente' element={isLoggedIn ? <ProntuarioPaciente/> : <Navigate to='/login'/> }/>
           <Route path='cadastro-de-usuario' element={!isLoggedIn ? <CadastroUsuario/> : <Navigate to='/'/>}/>
           <Route path='perfil-de-usuario' element={isLoggedIn ? <Perfil/> : <Navigate to='/login'/>}/>
         </Routes>
