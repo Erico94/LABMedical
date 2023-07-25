@@ -12,6 +12,8 @@ import Perfil from "./pages/Perfil/Perfil";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Header from "./components/Header/Header";
+import EditarConsulta from "./pages/Consulta/EditarConsulta";
+import EditarExame from "./pages/Exame/EditarExame";
 
 function App() {
   const {isLoggedIn} = useContext(AuthContext);
@@ -30,6 +32,8 @@ function App() {
           <Route path='prontuario-paciente' element={isLoggedIn ? <ProntuarioPaciente/> : <Navigate to='/login'/> }/>
           <Route path='cadastro-de-usuario' element={!isLoggedIn ? <CadastroUsuario/> : <Navigate to='/'/>}/>
           <Route path='perfil-de-usuario' element={isLoggedIn ? <Perfil/> : <Navigate to='/login'/>}/>
+          <Route path='editar-consulta' element={isLoggedIn ? <EditarConsulta/> : <Navigate to='/login'/>}/>
+          <Route path='editar-exame' element={isLoggedIn ? <EditarExame/> : <Navigate to='/login'/>}/>
         </Routes>
       </Router>
     </>

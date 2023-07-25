@@ -11,9 +11,11 @@ export const PagesProvider = ({ children }) => {
     pathName === "/cadastro-exame" && setCurrentPage("Cadastrar exame");
     pathName === "/cadastro-paciente" && setCurrentPage("Cadastrar paciente");
     pathName === "/prontuarios" && setCurrentPage("Prontuários");
-    pathName === "/prontuario-paciente" && setCurrentPage("prontuário de paciente");
+    pathName === "/prontuario-paciente" && setCurrentPage("Prontuário de paciente");
     pathName === "/cadastro-de-usuario" && setCurrentPage("Cadastro de usuário");
     pathName === "/perfil-de-usuario" && setCurrentPage("Perfil de usuário");
+    pathName === "/editar-consulta" && setCurrentPage("Editar consulta");
+    pathName === "/editar-exame" && setCurrentPage("Editar exame");
     console.log(currentPage);
   };
 

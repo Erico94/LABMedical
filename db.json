@@ -132,6 +132,31 @@
       "id": 7
     }
   ],
-  "consultas": [],
-  "exames": []
+  "consultas": [
+    {
+      "motivoDaConsulta": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ",
+      "dataDaConsulta": "2023-07-22",
+      "horaDaConsulta": "14:26",
+      "descricaoDoProblema": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.abcdefghijklm",
+      "medicacaoReceitada": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "dosagemEprecaucoes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "nomeDoPaciente": "ShaShaSHa",
+      "idDoPaciente": 7,
+      "id": 1
+    }
+  ],
+  "exames": [
+    {
+      "nomeDoExame": "testando outra funcionalidade agora ",
+      "dataDoExame": "2023-07-24",
+      "horaDoExame": "20:18",
+      "tipoDoExame": "testando outra funcionalidade ag",
+      "laboratorio": "testando outra funcionalidade ag",
+      "URLdoDocumento": "testando outra funcionalidade agora ",
+      "resultados": "testando outra funcionalidade agora now",
+      "nomeDoPaciente": "ShaShaSHa",
+      "idDoPaciente": 7,
+      "id": 1
+    }
+  ]
 }

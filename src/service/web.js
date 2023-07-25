@@ -50,13 +50,47 @@ export async function Post( ondePostar,data ) {
         });
 }
 
+export async function Put( ondePostar,data ) {
+    const dados = JSON.stringify(data);
+    fetch(`${Url_api}/${ondePostar}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: dados
+    }).then(function (response) {
+        if (response.ok) {
+            alert("Solicitação bem sucedida.")
+        } else {
+            alert('Erro ao criar o put.');
+        }
+    })
+        .catch(function (error) {
+            alert('Erro na solicitação:', error.message);
+        });
+}
+
+export async function Delete( ondeDeletar ) {
+    fetch(`${Url_api}/${ondeDeletar}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    }).then(function (response) {
+        if (response.ok) {
+            alert("Solicitação bem sucedida.")
+        } else {
+            alert('Erro ao deletar.');
+        }
+    })
+        .catch(function (error) {
+            alert('Erro na solicitação:', error.message);
+        });
+}
+
 export async function filtrarPacientes(termoBuscado) {
     var getAll = [];
     const response = await fetch(`${Url_api}/pacientes`).then((data)=>data.json());
     response.map((item)=>{
         getAll.push(item);
     })
-    const filtro = getAll.filter(item=>item.nome.toLocaleLowerCase().includes(termoBuscado.toLocaleLowerCase()));
+    const filtro = getAll.filter(item=>item.nome.toLocaleLowerCase().includes(termoBuscado.toLocaleLowerCase()) || item.id == termoBuscado);
     return filtro;
 }
 
@@ -71,3 +105,13 @@ export async function GetAllExamesOuConsultas (ondeBuscar, id){
       );
     return filtro;
 }
+
+// export async function encontrarConsulta(id) {
+//     var getAll = [];
+//     const response = await fetch(`${Url_api}/consultas`).then((data)=>data.json());
+//     response.map((item)=>{
+//         getAll.push(item);
+//     })
+//     const filtro = getAll.find((item)=>item.id == id);
+//     return filtro;
+// }

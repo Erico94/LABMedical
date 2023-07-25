@@ -33,6 +33,7 @@ export default function ListagemProntuarios() {
 
   const selecaoDePaciente = (paciente) => {
     SetPaciente(paciente);
+    setFoiSelecionado(true);
     navegue ("/prontuario-paciente")
   };
 
