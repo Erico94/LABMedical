@@ -33,7 +33,6 @@ export default function ListagemProntuarios() {
 
   const selecaoDePaciente = (paciente) => {
     SetPaciente(paciente);
-    setFoiSelecionado(true);
     navegue ("/prontuario-paciente")
   };
 
@@ -57,18 +56,16 @@ export default function ListagemProntuarios() {
     <>
       <h1>Prontuarios</h1>
       <h3>Selecione um paciente para ver prontuário.</h3>
-      {!foiSelecionado && inputDeBuscaDePaciente()}
-      {!foiSelecionado && (
+      {inputDeBuscaDePaciente()}
         <ul>
           {itensFiltrados.map((item, index) => {
             return (
-              <li key={index} onClick={() => selecaoDePaciente(item)}>
+              <li key={index} onClick={()=> selecaoDePaciente(item)}>
                 {item.nome}
               </li>
             );
           })}
         </ul>
-      )}
     </>
   );
 }

@@ -120,10 +120,6 @@ export default function CadastroExames() {
 
     return(
         <>
-        <button disabled>Deletar</button>
-      <button disabled>Editar</button>
-      {/* {foiSelecionado && <button>Salvar</button>} */}
-
       {!foiSelecionado && (
         <h3>Selecione um paciente para cadastrar um novo exame. </h3>
       )}

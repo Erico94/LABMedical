@@ -11,6 +11,8 @@ export default function FormularioDeCadastroDeExame(novoExame, paciente, {handle
   return (
     <>
       <h3>Paciente: {paciente.nome}</h3>
+      <button disabled>Deletar</button>
+      <button disabled>Editar</button>
       <form onSubmit={CallPost}>
         <label htmlFor="nomeDoExame">Nome do exame:</label>
         <input

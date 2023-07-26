@@ -117,10 +117,6 @@ export default function CadastroConsultas() {
 
   return (
     <>
-      <button disabled>Deletar</button>
-      <button disabled>Editar</button>
-      {/* {foiSelecionado && <button>Salvar</button>} */}
-
       {!foiSelecionado && (
         <h3>Selecione um paciente para cadastrar uma nova consulta. </h3>
       )}
@@ -138,7 +134,6 @@ export default function CadastroConsultas() {
           })}
         </ul>
       )}
-      {/* {foiSelecionado && <FormularioDeCadastroDeConsulta paciente = {pacienteSelecionado} novaConsulta={novaConsulta} handleChangeConsulta ={handleChangeConsulta}/>} */}
       {foiSelecionado && FormularioDeCadastroDeConsulta({novaConsulta}, pacienteSelecionado, {handleChangeConsulta}, {handleSubmit}) }
     </>
   );

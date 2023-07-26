@@ -13,6 +13,8 @@ export default function FormularioDeCadastroDeConsulta(novaConsulta, paciente, {
   return (
     <>
       <h3>Paciente: {paciente.nome}</h3>
+      <button disabled>Deletar</button>
+      <button disabled>Editar</button>
       <form onSubmit={CallPost}>
         <label htmlFor="motivoDaConsulta">Motivo da consulta:</label>
         <textarea

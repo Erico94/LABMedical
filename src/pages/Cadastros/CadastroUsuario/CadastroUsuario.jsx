@@ -1,12 +1,3 @@
-//colocar maxLength no cpf e fazer formatação
-//salvar usuario no Json ou localStorage
-//ao adicinar estilização para as boradas, atentar-se para que tornem iguais apo´s o ref se tornar false
-//quando clicado na palavra enfermagem o radio de medicina é selecionado, corrigir isso
-//tem muita funão duplicada aqui
-//posso mudar os useRefs para inputRefs
-// colocar o foco automatico no nome de usuario ao ir pra login
-//descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
-//pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
 import { useEffect, useRef, useState } from "react";
 import {
   Post,
@@ -14,16 +5,9 @@ import {
   verificaCpf,
   verificaCrmUf,
 } from "../../../service/web";
+import { formatarCPF } from "../../../service/Cadastro";
 
 export default function CadastroUsuario() {
-  const [genero, setGenero] = useState("");
-  const [area, setArea] = useState("");
-  const [email, setEmail] = useState("");
-  const [crmUf, setCrmUf] = useState("");
-  const [corenUf, setCorenUf] = useState("");
-  const [password, setPassword] = useState("");
-  const [nome, setName] = useState("");
-  const [cpf, setCpf] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [errorMail, setErrorMail] = useState(false);
   const [errorCrmUf, setErrorCrmUf] = useState(false);
@@ -49,29 +33,29 @@ export default function CadastroUsuario() {
   useEffect(() => {
     setErrorMail(false);
     emailRef.current.style.borderColor = "black";
-  }, [setEmail]);
+  }, [newUser.email]);
 
   useEffect(() => {
     setErrorCrmUf(false);
-    if (area === "medicina") {
+    if (newUser.area === "medicina") {
       crmUfRef.current.style.borderColor = "black";
     }
-  }, [setCrmUf]);
+  }, [newUser.crmUf]);
 
   useEffect(() => {
     setErrorCorenUf(false);
-    if (area === "enfermagem") {
+    if (newUser.area === "enfermagem") {
       corenUfRef.current.style.borderColor = "black";
     }
-  }, [setCorenUf]);
+  }, [newUser.corenUf]);
 
   useEffect(() => {
     setErrorCpf(false);
     cpfRef.current.style.borderColor = "black";
-  }, [setCpf]);
+  }, [newUser.cpf]);
 
   useEffect(() => {
-    if (password === passwordRepeat) {
+    if (newUser.senha === passwordRepeat) {
       setErrorPassword(false);
       passwordRef.current.style.borderRadius = "2px";
       passwordRef.current.style.border = "1px solid black";
@@ -79,66 +63,9 @@ export default function CadastroUsuario() {
       passwordRef.current.style.borderColor = "red";
       setErrorPassword(true);
     }
-  }, [password, passwordRepeat]);
+  }, [newUser.password, passwordRepeat]);
 
-  const handleGeneroChange = (event) => {
-    setGenero(event.target.value);
-    setNewUser({
-      ...newUser,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleAreaChange = (event) => {
-    setArea(event.target.value);
-    setNewUser({
-      ...newUser,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-    setNewUser({
-      ...newUser,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-    setNewUser({
-      ...newUser,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleCrmUfChange = (event) => {
-    setCrmUf(event.target.value);
-    setNewUser({
-      ...newUser,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleCorenUfChange = (event) => {
-    setCorenUf(event.target.value);
-    setNewUser({
-      ...newUser,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleCpfChange = (event) => {
-    setCpf(event.target.value);
-    setNewUser({
-      ...newUser,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handleChange = (event) => {
     setNewUser({
       ...newUser,
       [event.target.name]: event.target.value,
@@ -149,37 +76,49 @@ export default function CadastroUsuario() {
     setPasswordRepeat(event.target.value);
   };
 
+  const handleCpfChange = async (event) => {
+    const cpf = event.target.value;
+    const formatarCpf = formatarCPF(cpf);
+    setNewUser({
+      ...newUser,
+      [event.target.name]: formatarCpf,
+    });
+
+    const verificarCpf = await verificaCpf("usuarios", formatarCpf);
+    if (verificarCpf) {
+      setErrorCpf(true);
+      cpfRef.current.style.borderColor = "red";
+      return;
+    }
+    cpfRef.current.style.borderColor = "rgb(133, 133, 133)";
+    setErrorCpf(false);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const responseEmail = await verificaEmail(email);
+    const responseEmail = await verificaEmail(newUser.email);
     if (responseEmail) {
       emailRef.current.style.borderColor = "red";
       setErrorMail(true);
+      console.log(response);
       return;
     }
-    const responseCrmUf = await verificaCrmUf(crmUf);
+    const responseCrmUf = await verificaCrmUf(newUser.crmUf);
     if (responseCrmUf) {
       crmUfRef.current.style.borderColor = "red";
       setErrorCrmUf(true);
       return;
     }
-    const responseCorenUf = await verificaCrmUf(corenUf);
+    const responseCorenUf = await verificaCrmUf(newUser.corenUf);
     if (responseCorenUf) {
       corenUfRef.current.style.borderColor = "red";
       setErrorCorenUf(true);
       return;
     }
-    const responseCpf = await verificaCpf(cpf);
-    if (responseCpf) {
-      cpfRef.current.style.borderColor = "red";
-      setErrorCpf(true);
-      return;
-    }
     async function PostUser() {
-      await Post('usuarios',newUser).then(() =>
-        alert(`Usuário cadastrado com sucesso.`)
-      );
+      await Post("usuarios", newUser);
     }
+    console.log(responseEmail);
     PostUser();
   };
 
@@ -188,97 +127,103 @@ export default function CadastroUsuario() {
       <h1>Criar conta de usuário:</h1>
       <form onSubmit={handleSubmit}>
         <br />
-        <label htmlFor="genero">Gênero:</label>
-        <label for="masculino" required>
+        <label htmlFor="genero" value={newUser.genero}>
+          Gênero:
+        </label>
+        <label htmlFor="masculino">
           <input
+            required
             type="radio"
             id="masculino"
             name="genero"
             value="masculino"
-            onChange={handleGeneroChange}
+            onChange={(event) => handleChange(event)}
           />
           Masculino |
         </label>
 
-        <label for="feminino" required>
+        <label htmlFor="feminino">
           <input
+            required
             type="radio"
             id="feminino"
             name="genero"
             value="feminino"
-            onChange={handleGeneroChange}
+            onChange={(event) => handleChange(event)}
           />
           Feminino
         </label>
         <br />
 
-        <label for="area">Área de atuação:</label>
-        <label for="medicina">
+        <label htmlFor="area" value={newUser.area}>
+          Área de atuação:
+        </label>
+        <label htmlFor="medicina">
           <input
+            required
             type="radio"
             id="medicina"
             name="area"
             value="medicina"
-            onChange={handleAreaChange}
+            onChange={(event) => handleChange(event)}
           />
           Medicina |
         </label>
 
-        <label for="enfermagem">
+        <label htmlFor="enfermagem">
           <input
+            required
             type="radio"
             id="enfermagem"
             name="area"
             value="enfermagem"
-            onChange={handleAreaChange}
+            onChange={(event) => handleChange(event)}
           />
-          Enfermagem{" "}
+          Enfermagem
         </label>
 
         <br />
         <label htmlFor="nome">Nome completo</label>
         <input
-        autoFocus
+          autoFocus
           required
           type="text"
           name="nome"
-          value={nome}
-          onChange={handleNameChange}
+          value={newUser.nome}
+          onChange={(event) => handleChange(event)}
           id="nome"
         />
         <br />
 
-        {area === "medicina" && <label htmlFor="CRM-UF">CRM-UF</label>}
-        {area === "medicina" && (
-          <input
-            required
-            type="text"
-            name="crmUf"
-            value={crmUf}
-            ref={crmUfRef}
-            id="crmUf"
-            minLength={8}
-            maxLength={8}
-            onChange={handleCrmUfChange}
-          />
-        )}
+        <label htmlFor="CrmUf">Crm-UF</label>
+        <input
+          required
+          disabled={newUser.area === "medicina" ? false : true}
+          type="text"
+          name="crmUf"
+          value={newUser.crmUf}
+          ref={crmUfRef}
+          id="crmUf"
+          minLength={8}
+          maxLength={8}
+          onChange={(event) => handleChange(event)}
+        />
         {errorCrmUf && <span>Crm já cadastrado.</span>}
         <br />
 
-        {area === "enfermagem" && <label htmlFor="COREN-UF">Coren-UF</label>}
-        {area === "enfermagem" && (
-          <input
-            required
-            type="text"
-            name="corenUf"
-            value={corenUf}
-            ref={corenUfRef}
-            id="corenUf"
-            minLength={8}
-            maxLength={8}
-            onChange={handleCorenUfChange}
-          />
-        )}
+        <label htmlFor="COREN-UF">Coren-UF</label>
+        <input
+          required
+          disabled={newUser.area === "enfermagem" ? false : true}
+          type="text"
+          name="corenUf"
+          value={newUser.corenUf}
+          ref={corenUfRef}
+          id="corenUf"
+          minLength={8}
+          maxLength={8}
+          onChange={(event) => handleChange(event)}
+        />
         {errorCrmUf && <span>Crm já cadastrado.</span>}
         <br />
 
@@ -287,23 +232,24 @@ export default function CadastroUsuario() {
           required
           type="email"
           name="email"
-          value={email}
+          value={newUser.email}
           ref={emailRef}
           id="email"
-          onChange={handleEmailChange}
+          onChange={(event) => handleChange(event)}
         />
         {errorMail && <span>Email já cadastrado.</span>}
         <br />
         <label htmlFor="CPF">CPF</label>
         <input
           required
-          type="number"
+          type="text"
           name="cpf"
-          value={cpf}
+          value={newUser.cpf}
           ref={cpfRef}
           id="cpf"
           minLength={11}
-          onChange={handleCpfChange}
+          maxLength={12}
+          onChange={(event) => handleCpfChange(event)}
         />
         {errorCpf && <span>Cpf já cadastrado.</span>}
         <br />
@@ -311,11 +257,11 @@ export default function CadastroUsuario() {
         <input
           required
           type="password"
-          value={password}
+          value={newUser.senha}
           ref={passwordRef}
-          onChange={handlePasswordChange}
+          onChange={(event) => handleChange(event)}
           name="senha"
-          id="password"
+          id="senha"
           minLength={8}
         />
         <br />

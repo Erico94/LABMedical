@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { login } from "../../service/web";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -10,14 +10,15 @@ export default function FormularioLogin() {
   const [senha, setSenha] = useState("");
   const navigate = useNavigate();
   const { Authlogin } = useContext(AuthContext);
+  const [errorLogin, setErrorLogin] = useState(false);
+
+  useEffect(()=>{
+    setErrorLogin(false);
+  },[email, senha])
 
   const esqueciSenha = () => {
     alert("Esta funcionalidade ainda está em desenvolvimento.");
   };
-
-  const resetarSenha = () =>{
-    alert("Esta funcionalidade ainda está em desenvolvimento.");
-  }
 
   const handleClick = () => {
     navigate("/cadastro-de-usuario");
@@ -31,13 +32,12 @@ export default function FormularioLogin() {
     setSenha(event.target.value);
   };
 
-  //Aqui devo terminar ainda
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const usuario = await login(email, senha);
     if(!usuario){
-        alert("Dados inválidos");
+        setErrorLogin(true);
         return;
     }
     Authlogin(usuario);
@@ -69,12 +69,13 @@ export default function FormularioLogin() {
           id="senha"
         />
         <br />
+        {errorLogin && <span>Email ou senha inválidos</span>}
+        <br />
         <button type="submit">Entrar</button>
       </form>
       <button onClick={handleClick}>Criar conta</button>
       <br />
-      <a onClick={esqueciSenha}>Esqueci minha senha</a>
-      <a onClick={resetarSenha}>Resetar senha</a>
+      <a onClick={esqueciSenha} style={{color: 'blue', fontSize: '12px'}}>Esqueci minha senha</a>
     </>
   );
 }

@@ -15,6 +15,7 @@ export async function verificaEmail(email) {
     const response = await fetch(`${Url_api}/usuarios`);
     const usuarios = await response.json();
     const usuario = usuarios.find(usuario => usuario.email === email);
+    console.log(usuario);
     return usuario;
 }
 
@@ -48,6 +49,15 @@ export async function Post( ondePostar,data ) {
         .catch(function (error) {
             alert('Erro na solicitação:', error.message);
         });
+}
+
+export async function GetAll(ondeBuscar){
+    var getAll= [];
+    const response = await fetch(`${Url_api}/${ondeBuscar}`).then((data)=>data.json());
+    response.map((item)=>{
+        getAll.push(item)
+    })
+    return getAll;
 }
 
 export async function Put( ondePostar,data ) {
@@ -90,7 +100,7 @@ export async function filtrarPacientes(termoBuscado) {
     response.map((item)=>{
         getAll.push(item);
     })
-    const filtro = getAll.filter(item=>item.nome.toLocaleLowerCase().includes(termoBuscado.toLocaleLowerCase()) || item.id == termoBuscado);
+    const filtro = getAll.filter(item=>item.nome.toLocaleLowerCase().includes(termoBuscado.toLocaleLowerCase()) || item.id == termoBuscado || item.telefone.includes(termoBuscado) || item.email.toLocaleLowerCase().includes(termoBuscado.toLocaleLowerCase()));
     return filtro;
 }
 

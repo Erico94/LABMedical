@@ -14,6 +14,7 @@ import { AuthContext } from "./context/AuthContext";
 import Header from "./components/Header/Header";
 import EditarConsulta from "./pages/Consulta/EditarConsulta";
 import EditarExame from "./pages/Exame/EditarExame";
+import EditarPaciente from "./pages/Paciente/EditarPaciente";
 
 function App() {
   const {isLoggedIn} = useContext(AuthContext);
@@ -34,6 +35,8 @@ function App() {
           <Route path='perfil-de-usuario' element={isLoggedIn ? <Perfil/> : <Navigate to='/login'/>}/>
           <Route path='editar-consulta' element={isLoggedIn ? <EditarConsulta/> : <Navigate to='/login'/>}/>
           <Route path='editar-exame' element={isLoggedIn ? <EditarExame/> : <Navigate to='/login'/>}/>
+          <Route path='editar-cadastro-paciente' element={isLoggedIn ? <EditarPaciente/> : <Navigate to='/login'/>}/>
+          
         </Routes>
       </Router>
     </>

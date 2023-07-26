@@ -1,17 +1,6 @@
 {
   "usuarios": [
     {
-      "id": 1,
-      "email": "alvaresc75@gmail.com",
-      "password": "12345678",
-      "jwt": "jwt_token_user1",
-      "nome": "Alvares Cunha ",
-      "cpf": "09874563285",
-      "telefone": "48998154276",
-      "cep": "",
-      "rua": ""
-    },
-    {
       "sexo": "masculino",
       "area": "enfermagem",
       "nome": "Jhon",
@@ -20,84 +9,29 @@
       "corenUf": "45655-Pr",
       "senha": "12345678",
       "cpf": "0214668949",
-      "id": 2
+      "id": 1
     }
   ],
   "pacientes": [
-    {
-      "id": 1,
-      "nome": "Camden Paulino",
-      "telefone": "(04) 9438 2542",
-      "email": "molestie.in@outlook.org",
-      "cep": "46174-954",
-      "cpf": "419.361.846-77",
-      "nascimento": "06/28/09",
-      "rg": "894461",
-      "contato de emergencia": "(04) 5243 0171"
-    },
-    {
-      "id": 2,
-      "nome": "Ezra Das Gracas",
-      "telefone": "(03) 7462 1176",
-      "email": "eget.metus.in@aol.org",
-      "cep": "67436-662",
-      "cpf": "113.038.628-77",
-      "nascimento": "02/23/10",
-      "rg": "120755",
-      "contato de emergencia": "(04) 4654 5034"
-    },
-    {
-      "id": 3,
-      "nome": "Duncan Nascimento",
-      "telefone": "(05) 1464 2302",
-      "email": "vel.vulputate.eu@protonmail.org",
-      "cep": "61974-552",
-      "cpf": "807.395.186-79",
-      "nascimento": "07/21/21",
-      "rg": "788240",
-      "contato de emergencia": "(07) 3030 3917"
-    },
-    {
-      "id": 4,
-      "nome": "Mechelle Garza",
-      "telefone": "(08) 7433 4953",
-      "email": "dui.augue.eu@aol.couk",
-      "cep": "54790-203",
-      "cpf": "164.853.688-54",
-      "nascimento": "06/16/15",
-      "rg": "757120",
-      "contato de emergencia": "(07) 1528 3637"
-    },
-    {
-      "id": 5,
-      "nome": "Emmanuel de Paula",
-      "telefone": "(03) 3659 9228",
-      "email": "elit.fermentum.risus@icloud.edu",
-      "cep": "74776-529",
-      "cpf": "519.788.191-45",
-      "nascimento": "06/14/06",
-      "rg": "701296",
-      "contato de emergencia": "(08) 1504 1079"
-    },
     {
       "nome": "Érico André Mussulin",
       "genero": "masculino",
       "dataDeNascimento": "1994-11-19",
       "cpf": "094.326.539-88",
       "rg": "7875496",
-      "estadoCivil": "solteiro",
+      "estadoCivil": "casado",
       "telefone": "(48) 99865-4654",
-      "email": "erico@gmail.com",
+      "email": "ericoms@gmail.com",
       "naturalidade": "Paranaense",
       "contatoDeEmergencia": "(48) 99565-1321",
-      "alergias": "",
-      "cuidadosEspecificos": "",
+      "alergias": "Algumas apenas",
+      "cuidadosEspecificos": "Nenhum",
       "convenio": "",
       "numeroDoConvenio": "",
       "validadeDoConvenio": "",
       "cep": "85803030",
       "numero": "1289",
-      "complemento": "",
+      "complemento": "lalala",
       "logradouro": "Rua da Imigração",
       "bairro": "Santa Felicidade",
       "localidade": "Cascavel",
