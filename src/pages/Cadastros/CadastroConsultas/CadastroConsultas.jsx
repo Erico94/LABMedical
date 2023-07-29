@@ -4,8 +4,6 @@ import { useEffect, useContext, useState } from "react";
 import { filtrarPacientes, Post } from "../../../service/web";
 import FormularioDeCadastroDeConsulta from "../../../components/FormularioConsulta/FormularioDeCadastroDeConsulta";
 
-
-
 //apresentar animação ao salvar
 //descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
 //pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
@@ -17,7 +15,7 @@ export default function CadastroConsultas() {
   const [itensFiltrados, setItensFiltrados] = useState([]);
   const [foiSelecionado, setFoiSelecionado] = useState(false);
   const [pacienteSelecionado, setPacienteSelecinado] = useState({});
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState("");
   const [novaConsulta, setNovaConsulta] = useState({
     motivoDaConsulta: "",
     dataDaConsulta: "",
@@ -25,8 +23,8 @@ export default function CadastroConsultas() {
     descricaoDoProblema: "",
     medicacaoReceitada: "",
     dosagemEprecaucoes: "",
-    nomeDoPaciente : "",
-    idDoPaciente : 0,
+    nomeDoPaciente: "",
+    idDoPaciente: 0,
   });
 
   useEffect(() => {
@@ -42,20 +40,20 @@ export default function CadastroConsultas() {
     FiltrarPacientes();
   }, [termoBuscado]);
 
-  useEffect(() =>{
-    const ObterHora = ()=>{
+  useEffect(() => {
+    const ObterHora = () => {
       const agora = new Date();
-      const horaFormatada = agora.toTimeString().slice(0,5);
+      const horaFormatada = agora.toTimeString().slice(0, 5);
       setTime(horaFormatada);
-    }
+    };
     ObterHora();
     setNovaConsulta({
       ...novaConsulta,
-      nomeDoPaciente : pacienteSelecionado.nome,
-      idDoPaciente : pacienteSelecionado.id,
-      horaDaConsulta : time,
-    })
-  },[pacienteSelecionado])
+      nomeDoPaciente: pacienteSelecionado.nome,
+      idDoPaciente: pacienteSelecionado.id,
+      horaDaConsulta: time,
+    });
+  }, [pacienteSelecionado]);
 
   const handleChangeBusca = async (event) => {
     setTermoBuscado(event.target.value);
@@ -68,73 +66,88 @@ export default function CadastroConsultas() {
     });
   };
 
-  const LimparPaciente = () =>{
+  const LimparPaciente = () => {
     setPacienteSelecinado({});
-  }
+  };
 
-  const LimparConsulta =()=>{
+  const LimparConsulta = () => {
     setNovaConsulta({
       motivoDaConsulta: "",
-    dataDaConsulta: "",
-    horaDaConsulta: "",
-    descricaoDoProblema: "",
-    medicacaoReceitada: "",
-    dosagemEprecaucoes: "",
-    nomeDoPaciente : "",
-    idDoPaciente : 0,
-    })
-  }
+      dataDaConsulta: "",
+      horaDaConsulta: "",
+      descricaoDoProblema: "",
+      medicacaoReceitada: "",
+      dosagemEprecaucoes: "",
+      nomeDoPaciente: "",
+      idDoPaciente: 0,
+    });
+  };
 
-  const handleSubmit =async () =>{
-    await Post('consultas', novaConsulta);
+  const handleSubmit = async () => {
+    await Post("consultas", novaConsulta);
     LimparConsulta();
     LimparPaciente();
     setFoiSelecionado(false);
-
-  }
+  };
 
   const selecaoDePaciente = (paciente) => {
     setFoiSelecionado(true);
     setPacienteSelecinado(paciente);
   };
 
-
   function inputDeBuscaDePaciente() {
     return (
       <>
-        <label htmlFor="nomeOuId">Nome ou id:</label>
-        <input
-          autoFocus
-          type="text"
-          name="nomeOuId"
-          id="nomeOuId"
-          value={termoBuscado}
-          onChange={handleChangeBusca}
-        />
+        <div className="row mt-4 border border-primary fw-bold rounded-2">
+          <label htmlFor="nomeOuId">Nome ou id:</label>
+        </div>
+        <div className="row border rounded-2 fs-6 mb-4">
+          <input
+            autoFocus
+            type="text"
+            name="nomeOuId"
+            id="nomeOuId"
+            value={termoBuscado}
+            onChange={handleChangeBusca}
+            placeholder="Digite algo"
+          />
+        </div>
+
+        {/*
+         */}
       </>
     );
   }
 
   return (
     <>
-      {!foiSelecionado && (
-        <h3>Selecione um paciente para cadastrar uma nova consulta. </h3>
-      )}
-      {!foiSelecionado && inputDeBuscaDePaciente()}
-      <br />
-
-      {!foiSelecionado && (
-        <ul>
-          {itensFiltrados.map((item, index) => {
+      <div className="container">
+        <div className="row">
+          {!foiSelecionado && (
+            <h3>Selecione um paciente para cadastrar uma nova consulta. </h3>
+          )}
+        </div>
+        <div className="">{!foiSelecionado && inputDeBuscaDePaciente()}</div>
+        {!foiSelecionado &&
+          itensFiltrados.map((item) => {
             return (
-              <li key={index} onClick={() => selecaoDePaciente(item)}>
+              <div
+                className="row transition cursor-pointer border border-primary rounded-2 fs-4 my-2 p-2 "
+                style={{height:'60px'}}
+                onClick={() => selecaoDePaciente(item)}
+              >
                 {item.nome}
-              </li>
+              </div>
             );
           })}
-        </ul>
-      )}
-      {foiSelecionado && FormularioDeCadastroDeConsulta({novaConsulta}, pacienteSelecionado, {handleChangeConsulta}, {handleSubmit}) }
+      </div>
+      {foiSelecionado &&
+        FormularioDeCadastroDeConsulta(
+          { novaConsulta },
+          pacienteSelecionado,
+          { handleChangeConsulta },
+          { handleSubmit }
+        )}
     </>
   );
 }

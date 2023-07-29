@@ -1,11 +1,7 @@
 
-//ver se ainda esta exibindo o alert de erro e sucesso na mesma hora.
 // Deverá apresentar animação ao salvar.
-//Terminar o estilo da borda ao retornar o useRef ao normal
-//Se der tempo, fazer função que separa cada alergia/cuidado por vírgula e joga em um array para salvar.
-//descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
-//pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
-
+//Após salvar, direcionar para página inicial, se nao salvar manter nesta page
+//ao salvar aparecem tres alerts
 import { buscaCep } from "../../../service/Cep";
 import { verificaCpf, Post } from "../../../service/web";
 import { PagesContext } from "../../../context/PagesContext";

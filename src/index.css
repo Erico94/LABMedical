@@ -76,3 +76,24 @@ button:hover{
 a:hover{
   cursor: pointer;
 }
+
+.sideBar{
+  position: fixed;
+  margin-top: 30px;
+}
+
+.cursor-pointer:hover{
+  cursor: pointer;
+}
+
+.transition{
+  transition: all 0.25s ease;
+}
+
+.transition:hover{
+  transform: scale(1.03);
+}
+
+body{
+  font-family: 'Montserrat', sans-serif;
+}

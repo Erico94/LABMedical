@@ -1,10 +1,6 @@
 .toolbar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 25px;
-    padding: 9px 0;
+    background-color: #0D6EFE;
+    
 }
 
 .imagem-perfil{
@@ -13,4 +9,13 @@
 
 .imagem-perfil:hover{
     cursor: pointer;
+}
+
+.usuario{
+    display: flex;
+    align-items: center;
+}
+
+.nome{
+    margin-right: 15px;
 }
