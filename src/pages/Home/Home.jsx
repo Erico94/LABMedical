@@ -113,29 +113,23 @@ export default function Home() {
       <div className="container ">
         <h5 className="mt-5 ms-4 mb-3">Estatísticas do sistema:</h5>
         <div className="row justify-content-around mb-5">
-          <div className="col-3 text-center border border-secondary-subtle rounded-3 py-3 mx-4">
-            <CardEstatistica
-              imagem={imagemPaciente}
-              quantidade={totalPacientes}
-              nome="Pacientes"
-            />
-          </div>
+          <CardEstatistica
+            imagem={imagemPaciente}
+            quantidade={totalPacientes}
+            nome="Pacientes"
+          />
 
-          <div className="col-3 text-center border border-secondary-subtle rounded-3 py-3 mx-4">
-            <CardEstatistica
-              imagem={imagemConsulta}
-              quantidade={totalConsultas}
-              nome="Consultas"
-            />
-          </div>
+          <CardEstatistica
+            imagem={imagemConsulta}
+            quantidade={totalConsultas}
+            nome="Consultas"
+          />
 
-          <div className="col-3 text-center border border-secondary-subtle rounded-3 py-3 mx-4">
-            <CardEstatistica
-              imagem={imagemExame}
-              quantidade={totalExames}
-              nome="Exames"
-            />
-          </div>
+          <CardEstatistica
+            imagem={imagemExame}
+            quantidade={totalExames}
+            nome="Exames"
+          />
         </div>
         <div className="row fw-bold mx-5">{inputDeBuscaDePaciente()}</div>
 
