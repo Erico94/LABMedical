@@ -133,7 +133,7 @@ export default function CadastroConsultas() {
             return (
               <div
                 className="row transition cursor-pointer border border-primary rounded-2 fs-4 my-2 p-2 "
-                style={{height:'60px'}}
+                style={{ height: "60px" }}
                 onClick={() => selecaoDePaciente(item)}
               >
                 {item.nome}
@@ -141,13 +141,14 @@ export default function CadastroConsultas() {
             );
           })}
       </div>
-      {foiSelecionado &&
-        FormularioDeCadastroDeConsulta(
-          { novaConsulta },
-          pacienteSelecionado,
-          { handleChangeConsulta },
-          { handleSubmit }
-        )}
+      
+        {foiSelecionado &&
+          FormularioDeCadastroDeConsulta(
+            { novaConsulta },
+            pacienteSelecionado,
+            { handleChangeConsulta },
+            { handleSubmit }
+          )}
     </>
   );
 }
