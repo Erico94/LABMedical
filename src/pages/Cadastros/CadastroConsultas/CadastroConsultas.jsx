@@ -98,11 +98,11 @@ export default function CadastroConsultas() {
   function inputDeBuscaDePaciente() {
     return (
       <>
-        <div className="row mt-4 border border-primary fw-bold rounded-2">
-          <label htmlFor="nomeOuId">Nome ou id:</label>
-        </div>
-        <div className="row border rounded-2 fs-6 mb-4">
+        <label htmlFor="nomeOuId">Nome ou id:</label>
+
+        <div className="row border rounded-2 fs-6 mb-5">
           <input
+          className="form-control"
             autoFocus
             type="text"
             name="nomeOuId"
@@ -112,9 +112,6 @@ export default function CadastroConsultas() {
             placeholder="Digite algo"
           />
         </div>
-
-        {/*
-         */}
       </>
     );
   }
@@ -122,9 +119,9 @@ export default function CadastroConsultas() {
   return (
     <>
       <div className="container">
-        <div className="row">
+        <div className="row mt-5">
           {!foiSelecionado && (
-            <h3>Selecione um paciente para cadastrar uma nova consulta. </h3>
+            <span className="fs-4 mb-3">Selecione um paciente para cadastrar uma nova consulta. </span>
           )}
         </div>
         <div className="">{!foiSelecionado && inputDeBuscaDePaciente()}</div>
@@ -141,14 +138,13 @@ export default function CadastroConsultas() {
             );
           })}
       </div>
-      
-        {foiSelecionado &&
-          FormularioDeCadastroDeConsulta(
-            { novaConsulta },
-            pacienteSelecionado,
-            { handleChangeConsulta },
-            { handleSubmit }
-          )}
+      {foiSelecionado &&
+        FormularioDeCadastroDeConsulta(
+          { novaConsulta },
+          pacienteSelecionado,
+          { handleChangeConsulta },
+          { handleSubmit }
+        )}
     </>
   );
 }

@@ -16,7 +16,7 @@ export default function CadastroExames() {
   const [itensFiltrados, setItensFiltrados] = useState([]);
   const [foiSelecionado, setFoiSelecionado] = useState(false);
   const [pacienteSelecionado, setPacienteSelecionado] = useState({});
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState("");
   const [novoExame, setNovoExame] = useState({
     nomeDoExame: "",
     dataDoExame: "",
@@ -24,18 +24,16 @@ export default function CadastroExames() {
     tipoDoExame: "",
     laboratorio: "",
     URLdoDocumento: "",
-    resultados:"",
-    nomeDoPaciente : "",
-    idDoPaciente : 0,
+    resultados: "",
+    nomeDoPaciente: "",
+    idDoPaciente: 0,
   });
 
-  useEffect (() => {
+  useEffect(() => {
     PageSetCurrentPage(pathName);
     console.log(pathName);
-  },[]);
+  }, []);
 
-
-  
   useEffect(() => {
     async function FiltrarPacientes() {
       const pacientes = await filtrarPacientes(termoBuscado);
@@ -44,20 +42,20 @@ export default function CadastroExames() {
     FiltrarPacientes();
   }, [termoBuscado]);
 
-  useEffect(() =>{
-    const ObterHora = ()=>{
+  useEffect(() => {
+    const ObterHora = () => {
       const agora = new Date();
-      const horaFormatada = agora.toTimeString().slice(0,5);
+      const horaFormatada = agora.toTimeString().slice(0, 5);
       setTime(horaFormatada);
-    }
+    };
     ObterHora();
     setNovoExame({
       ...novoExame,
-      nomeDoPaciente : pacienteSelecionado.nome,
-      idDoPaciente : pacienteSelecionado.id,
-      horaDoExame : time,
-    })
-  },[pacienteSelecionado])
+      nomeDoPaciente: pacienteSelecionado.nome,
+      idDoPaciente: pacienteSelecionado.id,
+      horaDoExame: time,
+    });
+  }, [pacienteSelecionado]);
 
   const handleChangeBusca = async (event) => {
     setTermoBuscado(event.target.value);
@@ -70,11 +68,11 @@ export default function CadastroExames() {
     });
   };
 
-  const LimparPaciente = () =>{
+  const LimparPaciente = () => {
     setPacienteSelecionado({});
-  }
+  };
 
-  const LimparExame =()=>{
+  const LimparExame = () => {
     setNovoExame({
       nomeDoExame: "",
       dataDoExame: "",
@@ -82,62 +80,75 @@ export default function CadastroExames() {
       tipoDoExame: "",
       laboratorio: "",
       URLdoDocumento: "",
-      resultados:"",
-      nomeDoPaciente : "",
-      idDoPaciente : 0,
-    })
-  }
+      resultados: "",
+      nomeDoPaciente: "",
+      idDoPaciente: 0,
+    });
+  };
 
-  const handleSubmit =async () =>{
-    await Post('exames', novoExame);
+  const handleSubmit = async () => {
+    await Post("exames", novoExame);
     LimparExame();
     LimparPaciente();
     setFoiSelecionado(false);
-
-  }
+  };
 
   const selecaoDePaciente = (paciente) => {
     setFoiSelecionado(true);
     setPacienteSelecionado(paciente);
   };
 
-
   function inputDeBuscaDePaciente() {
     return (
       <>
         <label htmlFor="nomeOuId">Nome ou id:</label>
-        <input
-          autoFocus
-          type="text"
-          name="nomeOuId"
-          id="nomeOuId"
-          value={termoBuscado}
-          onChange={handleChangeBusca}
-        />
+
+        <div className="row border rounded-2 fs-6 mb-5">
+          <input
+          className="form-control"
+          placeholder="Digite algo"
+            autoFocus
+            type="text"
+            name="nomeOuId"
+            id="nomeOuId"
+            value={termoBuscado}
+            onChange={handleChangeBusca}
+          />
+        </div>
       </>
     );
   }
 
-    return(
-        <>
-      {!foiSelecionado && (
-        <h3>Selecione um paciente para cadastrar um novo exame. </h3>
-      )}
-      {!foiSelecionado && inputDeBuscaDePaciente()}
-      <br />
+  return (
+    <>
+      <div className="container">
+        <div className="row">
+          {!foiSelecionado && (
+            <span className="fs-3 mt-4 mb-3">Selecione um paciente para cadastrar um novo exame. </span>
+          )}
+        </div>
+        <div className="">{!foiSelecionado && inputDeBuscaDePaciente()}</div>
 
-      {!foiSelecionado && (
-        <ul>
-          {itensFiltrados.map((item, index) => {
+        {!foiSelecionado &&
+          itensFiltrados.map((item, index) => {
             return (
-              <li key={index} onClick={() => selecaoDePaciente(item)}>
+              <div
+                className="row transition cursor-pointer border border-primary rounded-2 fs-4 my-2 p-2 "
+                style={{ height: "60px" }}
+                onClick={() => selecaoDePaciente(item)}
+              >
                 {item.nome}
-              </li>
+              </div>
             );
           })}
-        </ul>
-      )}
-      {foiSelecionado && FormularioDeCadastroDeExame({novoExame}, pacienteSelecionado, {handleChangeExame}, {handleSubmit}) }
-        </>
-    )
+      </div>
+      {foiSelecionado &&
+        FormularioDeCadastroDeExame(
+          { novoExame },
+          pacienteSelecionado,
+          { handleChangeExame },
+          { handleSubmit }
+        )}
+    </>
+  );
 }

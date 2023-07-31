@@ -16,15 +16,19 @@ export default function FormularioDeCadastroDeConsulta(
   return (
     <>
       <div className="container w-75 mt-3 mb-0">
-      <div className="row d-flex justify-content-center">
-        <div className="col-8">
-          <h4>Paciente: {paciente.nome}</h4>
+        <div className="row d-flex justify-content-center">
+          <div className="col-8">
+            <h4>Paciente: {paciente.nome}</h4>
+          </div>
+          <div className="col-4 mb-1 d-flex flex-row-reverse">
+            <button disabled className="btn btn-secondary">
+              Excluir
+            </button>
+            <button disabled className="me-2 btn btn-secondary">
+              Editar
+            </button>
+          </div>
         </div>
-        <div className="col-4 mb-1">
-          <button disabled className="btn btn-secondary">Deletar</button>
-          <button disabled className="ms-2 btn btn-secondary">Editar</button>
-        </div>
-      </div>
       </div>
 
       <div className="container  border border-secondary rounded-3 mb-3 w-75">
@@ -33,7 +37,7 @@ export default function FormularioDeCadastroDeConsulta(
             <div className="col-6 mb-4">
               <label htmlFor="dataDaConsulta">Data: </label>
               <input
-              className="ms-2 border rounded-2"
+                className="ms-2 border rounded-2"
                 required
                 type="date"
                 name="dataDaConsulta"
@@ -45,7 +49,7 @@ export default function FormularioDeCadastroDeConsulta(
             <div className="col-4 mb-4 d-flex justify-content-end">
               <label htmlFor="horaDaConsulta">Hora: </label>
               <input
-              className="ms-2 border rounded-2"
+                className="ms-2 border rounded-2"
                 required
                 type="time"
                 name="horaDaConsulta"
@@ -58,9 +62,7 @@ export default function FormularioDeCadastroDeConsulta(
 
           <div className="row">
             <div className="col-12 mb-2">
-              <label htmlFor="motivoDaConsulta">
-                Motivo da consulta:
-              </label>
+              <label htmlFor="motivoDaConsulta">Motivo da consulta:</label>
               <textarea
                 className="form-control w-100"
                 required
@@ -78,7 +80,9 @@ export default function FormularioDeCadastroDeConsulta(
 
           <div className="row">
             <div className="col-12 mb-2">
-              <label htmlFor="descricaoDoProblema">Descrição do problema:</label>
+              <label htmlFor="descricaoDoProblema">
+                Descrição do problema:
+              </label>
               <textarea
                 className="form-control w-100"
                 required

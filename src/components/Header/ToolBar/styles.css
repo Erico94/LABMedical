@@ -7,10 +7,6 @@
     width: 60px;
 }
 
-.imagem-perfil:hover{
-    cursor: pointer;
-}
-
 .usuario{
     display: flex;
     align-items: center;

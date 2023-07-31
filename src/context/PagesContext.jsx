@@ -13,7 +13,6 @@ export const PagesProvider = ({ children }) => {
     pathName === "/prontuarios" && setCurrentPage("Prontuários");
     pathName === "/prontuario-paciente" && setCurrentPage("Prontuário de paciente");
     pathName === "/cadastro-de-usuario" && setCurrentPage("Cadastro de usuário");
-    pathName === "/perfil-de-usuario" && setCurrentPage("Perfil de usuário");
     pathName === "/editar-consulta" && setCurrentPage("Editar consulta");
     pathName === "/editar-exame" && setCurrentPage("Editar exame");
     pathName === "/editar-cadastro-paciente" && setCurrentPage("Cadastro de paciente");

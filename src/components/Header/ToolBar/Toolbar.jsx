@@ -13,7 +13,7 @@ export default function Toolbar() {
     <div className="container border rounded-3 p-3 toolbar">
       <div className="row">
         <div className="col-6 ps-5 d-flex align-items-center text-light">
-          <h3>{currentPage}</h3>
+          <span className="fs-3 fw-bold text-uppercase">{currentPage}</span>
         </div>
         <div className="col-6 d-flex justify-content-end align-items-center pe-5 text-light">
           <h4 className="nome">{usuarioLogado.nome}</h4>

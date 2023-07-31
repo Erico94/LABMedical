@@ -95,7 +95,7 @@ export default function Home() {
       <>
         <label htmlFor="nomeOuId">Busca rápida de paciente:</label>
         <input
-          className="border rounded-2"
+          className="border rounded-2 form-control"
           autoFocus
           placeholder="Nome, telefone ou email"
           type="text"
@@ -133,7 +133,7 @@ export default function Home() {
         </div>
         <div className="row fw-bold mx-5">{inputDeBuscaDePaciente()}</div>
 
-        <div className="row" style={{ justifyContent: "space-evenly" }}>
+        <div className="row mb-5" style={{ justifyContent: "space-evenly" }}>
           {itensFiltrados.map((item) => {
             return (
               <div className="text-center col-3 border border-primary border-1 rounded-3 shadow bg-body-tertiary transition mt-1 p-3 mx-4 mt-3">
@@ -142,7 +142,7 @@ export default function Home() {
                   className="btn btn-info"
                   onClick={() => selecaoDePaciente(item)}
                 >
-                  Ver mais
+                  Ver cadastro
                 </button>
               </div>
             );

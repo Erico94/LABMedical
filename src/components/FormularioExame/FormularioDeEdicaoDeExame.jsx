@@ -22,107 +22,159 @@ export default function FormularioDeEdicaoDeExame(props) {
   };
   return (
     <>
-      <h3>Paciente: {paciente.nome}</h3>
-      <form onSubmit={HandleSubmit}>
-        <label htmlFor="nomeDoExame">Nome do exame:</label>
-        <input
-          disabled={editar ? false : true}
-          type="text"
-          required
-          maxLength={64}
-          minLength={8}
-          name="nomeDoExame"
-          id="nomeDoExame"
-          cols="30"
-          rows="4"
-          value={exame.nomeDoExame}
-          onChange={HandleEditExame}
-        ></input>
-        <br />
+      <div className="container w-75 mt-3 mb-0">
+        <div className="row d-flex justify-content-center">
+          <div className="col-8">
+            <h3>Paciente: {paciente.nome}</h3>
+          </div>
+          <div className="col-4 mb-1">
+            <button
+              className="btn btn-secondary"
+              disabled={editar ? true : false}
+              onClick={HandleDeleteExame}
+            >
+              Excluir
+            </button>
+            <button
+              className="ms-2 btn btn-secondary"
+              disabled={editar ? true : false}
+              onClick={HandleEditar}
+            >
+              Editar
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <label htmlFor="dataDoExame">Data do exame</label>
-        <input
-          disabled={editar ? false : true}
-          required
-          type="date"
-          name="dataDoExame"
-          id="dataDoExame"
-          value={exame.dataDoExame}
-          onChange={HandleEditExame}
-        />
-        <br />
+      <div className="container  border border-secondary rounded-3 mb-3 w-75">
+        <form onSubmit={HandleSubmit}>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-6 mb-4">
+              <label htmlFor="dataDoExame">Data do exame</label>
+              <input
+                className="ms-2 border rounded-2"
+                disabled={editar ? false : true}
+                required
+                type="date"
+                name="dataDoExame"
+                id="dataDoExame"
+                value={exame.dataDoExame}
+                onChange={HandleEditExame}
+              />
+            </div>
+            <div className="col-4 mb-4 d-flex justify-content-end">
+              <label htmlFor="horaDoExame">Horário do exame</label>
+              <input
+                className="ms-2 border rounded-2"
+                disabled={editar ? false : true}
+                required
+                type="time"
+                name="horaDoExame"
+                id="horaDoExame"
+                value={exame.horaDoExame}
+                onChange={HandleEditExame}
+              />
+            </div>
+          </div>
+          <br />
 
-        <label htmlFor="horaDoExame">Horário do exame</label>
-        <input
-          disabled={editar ? false : true}
-          required
-          type="time"
-          name="horaDoExame"
-          id="horaDoExame"
-          value={exame.horaDoExame}
-          onChange={HandleEditExame}
-        />
-        <br />
+          <div className="row">
+            <div className="col-12 mb-2">
+              <label htmlFor="nomeDoExame">Nome do exame:</label>
+              <input
+                className="form-control w-100"
+                disabled={editar ? false : true}
+                type="text"
+                required
+                maxLength={64}
+                minLength={8}
+                name="nomeDoExame"
+                id="nomeDoExame"
+                cols="30"
+                rows="4"
+                value={exame.nomeDoExame}
+                onChange={HandleEditExame}
+              ></input>
+            </div>
+          </div>
 
-        <label htmlFor="tipoDoExame">Tipo do exame:</label>
-        <textarea
-          disabled={editar ? false : true}
-          required
-          minLength={4}
-          maxLength={32}
-          name="tipoDoExame"
-          id="tipoDoExame"
-          cols="30"
-          rows="2"
-          value={exame.tipoDoExame}
-          onChange={HandleEditExame}
-        ></textarea>
-        <br />
+          <div className="row">
+            <div className="col-12 mb-2">
+              <label htmlFor="tipoDoExame">Tipo do exame:</label>
+              <textarea
+                className="form-control w-100"
+                disabled={editar ? false : true}
+                required
+                minLength={4}
+                maxLength={32}
+                name="tipoDoExame"
+                id="tipoDoExame"
+                cols="30"
+                rows="2"
+                value={exame.tipoDoExame}
+                onChange={HandleEditExame}
+              ></textarea>
+            </div>
+          </div>
 
-        <label htmlFor="laboratorio">Laboratório:</label>
-        <input
-          disabled={editar ? false : true}
-          type="text"
-          required
-          name="laboratorio"
-          id="laboratorio"
-          maxLength={32}
-          minLength={4}
-          cols="30"
-          rows="2"
-          value={exame.laboratorio}
-          onChange={HandleEditExame}
-        ></input>
-        <br />
+          <div className="row">
+            <div className="col-12 mb-2">
+              <label htmlFor="laboratorio">Laboratório:</label>
+              <input
+                className="form-control w-100"
+                disabled={editar ? false : true}
+                type="text"
+                required
+                name="laboratorio"
+                id="laboratorio"
+                maxLength={32}
+                minLength={4}
+                cols="30"
+                rows="2"
+                value={exame.laboratorio}
+                onChange={HandleEditExame}
+              ></input>
+            </div>
+          </div>
 
-        <label htmlFor="URLdoDocumento">URL do documento:</label>
-        <input
-          disabled={editar ? false : true}
-          type="text"
-          name="URLdoDocumento"
-          id="URLdoDocumento"
-          value={exame.URLdoDocumento}
-          onChange={HandleEditExame}
-        ></input>
-        <br />
+          <div className="row">
+            <div className="col-12 mb-2">
+              <label htmlFor="URLdoDocumento">URL do documento:</label>
+              <input
+                className="form-control w-100"
+                disabled={editar ? false : true}
+                type="text"
+                name="URLdoDocumento"
+                id="URLdoDocumento"
+                value={exame.URLdoDocumento}
+                onChange={HandleEditExame}
+              ></input>
+            </div>
+          </div>
 
-        <label htmlFor="resultados">Resultados:</label>
-        <textarea
-          disabled={editar ? false : true}
-          required
-          name="resultados"
-          id="resultados"
-          maxLength={1024}
-          minLength={16}
-          cols="30"
-          rows="8"
-          value={exame.resultados}
-          onChange={HandleEditExame}
-        ></textarea>
-        <button disabled={editar ? false : true} type="submit">Salvar</button>
-      </form>
-      <button disabled={editar ? true : false} onClick={HandleDeleteExame}>Excluir</button>
-      <button disabled={editar ? true : false} onClick={HandleEditar}>Editar</button>
+          <div className="row">
+            <div className="col-12 mb-2">
+              <label htmlFor="resultados">Resultados:</label>
+              <textarea
+                className="form-control w-100"
+                disabled={editar ? false : true}
+                required
+                name="resultados"
+                id="resultados"
+                maxLength={1024}
+                minLength={16}
+                cols="30"
+                rows="8"
+                value={exame.resultados}
+                onChange={HandleEditExame}
+              ></textarea>
+            </div>
+          </div>
+          <button disabled={editar ? false : true} className="w-100 btn btn-primary mb-3"  type="submit">
+            Salvar
+          </button>
+        </form>
+      </div>
     </>
   );
 }

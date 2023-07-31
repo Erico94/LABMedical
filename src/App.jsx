@@ -13,7 +13,6 @@ import CadastroPaciente from "./pages/Cadastros/CadastroPacientes/CadastroPacien
 import ListagemProntuarios from "./pages/Prontuarios/ListagemDeProntuarios/ListagemProntuarios";
 import ProntuarioPaciente from "./pages/Prontuarios/ProntuarioDePacientes/ProntuarioPaciente";
 import CadastroUsuario from "./pages/Cadastros/CadastroUsuario/CadastroUsuario";
-import Perfil from "./pages/Perfil/Perfil";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Header from "./components/Header/Header";
@@ -74,10 +73,6 @@ function App() {
           <Route
             path="cadastro-de-usuario"
             element={!isLoggedIn ? <CadastroUsuario /> : <Navigate to="/" />}
-          />
-          <Route
-            path="perfil-de-usuario"
-            element={isLoggedIn ? <Perfil /> : <Navigate to="/login" />}
           />
           <Route
             path="editar-consulta"

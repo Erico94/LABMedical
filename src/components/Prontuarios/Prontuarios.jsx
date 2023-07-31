@@ -8,73 +8,91 @@ export default function Prontuarios() {
   const [listaDeConsultas, setListaDeConsultas] = useState([]);
   const { PacienteSelecionado } = useContext(PacienteContext);
   const navegue = useNavigate();
-  const {SetConsulta} = useContext(PacienteContext);
-  const {SetExame} = useContext(PacienteContext);
+  const { SetConsulta } = useContext(PacienteContext);
+  const { SetExame } = useContext(PacienteContext);
 
   useEffect(() => {
     async function ObterConsultas() {
-      const data = await GetAllExamesOuConsultas('consultas',PacienteSelecionado.id);
+      const data = await GetAllExamesOuConsultas(
+        "consultas",
+        PacienteSelecionado.id
+      );
       setListaDeConsultas(data);
     }
     async function ObterExames() {
-      const data = await GetAllExamesOuConsultas('exames',PacienteSelecionado.id);
+      const data = await GetAllExamesOuConsultas(
+        "exames",
+        PacienteSelecionado.id
+      );
       setListaDeExames(data);
     }
     ObterConsultas();
     ObterExames();
   }, []);
 
-  function EditarConsulta (item){
+  function EditarConsulta(item) {
     SetConsulta(item);
-    navegue('/editar-consulta');
+    navegue("/editar-consulta");
   }
 
-  function EditarExame (item){
+  function EditarExame(item) {
     SetExame(item);
-    navegue('/editar-exame');
+    navegue("/editar-exame");
   }
 
   return (
     <>
-      <h2>Consultas:</h2>
-      <ul>
-          {listaDeConsultas.map((item, index) => {
+      <div className="container mt-4">
+        <h3>Consultas:</h3>
+        <div>
+          {listaDeConsultas.map((item) => {
             return (
               <>
-              <li key={index}>
-                <ul>
-                  <li key={item.motivoDaConsulta}>Motivo: {item.motivoDaConsulta}</li>
-                  <li key={item.dataDaConsulta}>Data: {item.dataDaConsulta}</li>
-                  <li key={item.horaDaConsulta}>Hora: {item.horaDaConsulta}</li>
-                </ul>
-              </li>
-              <li><button onClick={()=>EditarConsulta(item)}>Editar</button></li>
+                <div className="container border border-secondary rounded-1 mb-2">
+                  <div className="mt-1 ms-2">
+                    Motivo: {item.motivoDaConsulta}
+                  </div>
+                  <div className="mt-1 ms-2">Data: {item.dataDaConsulta}</div>
+                  <div className="mt-1 ms-2">Hora: {item.horaDaConsulta}</div>
+                  <div>
+                    <button
+                      className="mt-1 ms-2 mb-2 btn btn-secondary transition"
+                      onClick={() => EditarConsulta(item)}
+                    >
+                      Editar
+                    </button>
+                  </div>
+                </div>
               </>
             );
           })}
-        </ul>
+        </div>
 
-
-      <h2>Exames:</h2>
-        <ul>
-          {listaDeExames.map((item, index) => {
+        <h3 className="mt-4">Exames:</h3>
+        <div>
+          {listaDeExames.map((item) => {
             return (
               <>
-              <li key={index}>
-                <ul>
-                  <li>Nome: {item.nomeDoExame}</li>
-                  <li>Laboratório: {item.laboratorio}</li>
-                  <li>Data: {item.dataDoExame}</li>
-                  <li>Hora: {item.horaDoExame}</li>
-                  <li>Anexo: {item.URLdoDocumento}</li>
-                </ul>
-              </li>
-              <li><button onClick={()=>EditarExame(item)}>Editar</button></li>
-              <li></li>
+                <div className="container border border-secondary rounded-1 mb-2">
+                  <div className="mt-1 ms-2">Nome: {item.nomeDoExame}</div>
+                  <div className="mt-1 ms-2">
+                    Laboratório: {item.laboratorio}
+                  </div>
+                  <div className="mt-1 ms-2">Data: {item.dataDoExame}</div>
+                  <div className="mt-1 ms-2">Hora: {item.horaDoExame}</div>
+                  <div className="mt-1 ms-2">Anexo: {item.URLdoDocumento}</div>
+                  <button
+                    className="mt-1 ms-2 mb-2 btn btn-secondary transition"
+                    onClick={() => EditarExame(item)}
+                  >
+                    Editar
+                  </button>
+                </div>
               </>
             );
           })}
-        </ul>
+        </div>
+      </div>
     </>
   );
 }

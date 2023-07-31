@@ -1,4 +1,3 @@
-
 // Deverá apresentar animação ao salvar.
 //Após salvar, direcionar para página inicial, se nao salvar manter nesta page
 //ao salvar aparecem tres alerts
@@ -64,14 +63,14 @@ export default function CadastroPaciente() {
       [event.target.name]: formatarCpf,
     });
 
-    const verificarCpf =await verificaCpf("pacientes",formatarCpf);
-    if (verificarCpf){
+    const verificarCpf = await verificaCpf("pacientes", formatarCpf);
+    if (verificarCpf) {
       alert(` CPF ja está cadastrado`);
       setErrorCpf(true);
-      inputRefs.current.cpf.style.borderColor= 'red';
+      inputRefs.current.cpf.style.borderColor = "red";
       return;
     }
-    inputRefs.current.cpf.style.borderColor= 'rgb(133, 133, 133)';
+    inputRefs.current.cpf.style.borderColor = "rgb(133, 133, 133)";
     setErrorCpf(false);
   };
 
@@ -107,285 +106,385 @@ export default function CadastroPaciente() {
     });
   };
 
-  const handleSubmit =async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-      await Post('pacientes',novoPaciente).then(() =>
-      alert("Paciente cadastrado com sucesso")
-      ).catch(alert("Erro ao inserir paciente na base de dados."));
+    await Post("pacientes", novoPaciente)
+      .then(() => alert("Paciente cadastrado com sucesso"))
+      .catch(alert("Erro ao inserir paciente na base de dados."));
   };
 
   return (
     <>
-      <button disabled>
-        Editar
-      </button>
-      <button disabled>
-        Apagar
-      </button>
+      <div className="container  border border-secondary rounded-3 mt-3 mb-3 w-50">
+        <form onSubmit={handleSubmit}>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="nome">Nome completo:</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                autoFocus
+                type="text"
+                name="nome"
+                id="nome"
+                onChange={handleChange}
+                value={novoPaciente.nome}
+                minLength={8}
+                maxLength={64}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="genero">Gênero:</label>
+              <select
+                className="form-select w-25 form-select-sm"
+                required
+                name="genero"
+                id="genero"
+                value={novoPaciente.genero}
+                onChange={handleChange}
+              >
+                <option value="">Selecione</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+              </select>
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="data-nascimento">Data de nascimento:</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                type="date"
+                name="dataDeNascimento"
+                id="dataDeNascimento"
+                value={novoPaciente.dataDeNascimento}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="cpf">CPF:</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                type="text"
+                minLength={11}
+                maxLength={11}
+                placeholder="000.000.000-00"
+                name="cpf"
+                id="cpf"
+                value={novoPaciente.cpf}
+                onChange={handleCpfChange}
+                ref={(el) => (inputRefs.current.cpf = el)}
+              />
+              {errorCpf && <span>CPF já cadastrado no sistema.</span>}
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="rg">RG com órgão expeditor:</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                type="text"
+                name="rg"
+                id="rg"
+                maxLength={7}
+                value={novoPaciente.rg}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="estadoCivil">Estado civil:</label>
+              <select
+                className="form-select w-25 form-select-sm"
+                required
+                name="estadoCivil"
+                id="estadoCivil"
+                value={novoPaciente.estadoCivil}
+                onChange={handleChange}
+              >
+                <option value="">Selecione</option>
+                <option value="solteiro">Solteiro</option>
+                <option value="casado">Casado</option>
+                <option value="divorciado">Divorciado</option>
+                <option value="separado">Separado</option>
+                <option value="viuvo">Viúvo</option>
+              </select>
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="telefone">Telefone:</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                type="text"
+                id="telefone"
+                name="telefone"
+                minLength={14}
+                maxLength={15}
+                value={novoPaciente.telefone}
+                onChange={handleTelefoneChange}
+                placeholder="(xx) xxxxx-xxxx"
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="email">Email</label>
+              <input
+                className="ms-2 border rounded-2"
+                type="email"
+                name="email"
+                id="email"
+                value={novoPaciente.email}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="naturalidade">Naturalidade</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                type="text"
+                minLength={8}
+                maxLength={64}
+                name="naturalidade"
+                id="naturalidade"
+                value={novoPaciente.naturalidade}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="contatoDeEmergencia">Contato de emergência</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                type="text"
+                minLength={14}
+                maxLength={15}
+                name="contatoDeEmergencia"
+                id="contatoDeEmergencia"
+                value={novoPaciente.contatoDeEmergencia}
+                onChange={handleTelefoneChange}
+                placeholder="(xx) xxxxx-xxxx"
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="alergias">Alergias</label>
+              <input
+                className="ms-2 border rounded-2"
+                type="text"
+                name="alergias"
+                id="alergias"
+                value={novoPaciente.alergias}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="cuidadosEspecificos">Cuidados específicos</label>
+              <input
+                className="ms-2 border rounded-2"
+                type="text"
+                name="cuidadosEspecificos"
+                id="cuidadosEspecificos"
+                value={novoPaciente.cuidadosEspecificos}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="convenio">Convênio</label>
+              <input
+                className="ms-2 border rounded-2"
+                type="text"
+                name="convenio"
+                id="convenio"
+                value={novoPaciente.convenio}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="numeroDoConvenio">Número do convênio</label>
+              <input
+                className="ms-2 border rounded-2"
+                type="number"
+                name="numeroDoConvenio"
+                id="numeroDoConvenio"
+                value={novoPaciente.numeroDoConvenio}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="validadeDoConvenio">Validade do convênio</label>
+              <input
+                className="ms-2 border rounded-2"
+                type="date"
+                name="validadeDoConvenio"
+                id="validadeDoConvenio"
+                value={novoPaciente.validadeDoConvenio}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-10 mb-4 ">
+              <label htmlFor="cep">Cep</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                type="text"
+                name="cep"
+                id="cep"
+                value={novoPaciente.cep}
+                onChange={handleChange}
+                maxLength={8}
+              />
+              <button
+                className="w-25 h-75  d-inline-block btn btn-primary text-uppercase "
+                onClick={handleBuscaCep}
+              >
+                Buscar cep
+              </button>
+              
+            </div>
+            {errorCep && <span>Insira um cep válido</span>}
+          </div>
+          <div className="row d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="logradouro">Rua</label>
+              <input
+                className="ms-2 border rounded-2"
+                disabled
+                type="text"
+                id="logradouro"
+                name="logradouro"
+                value={novoPaciente.logradouro}
+              />{" "}
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="bairro">Bairro</label>
+              <input
+                className="ms-2 border rounded-2"
+                disabled
+                type="text"
+                id="bairro"
+                name="bairro"
+                value={novoPaciente.bairro}
+              />{" "}
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="localidade">Cidade</label>
+              <input
+                className="ms-2 border rounded-2"
+                disabled
+                type="text"
+                id="localidade"
+                name="localidade"
+                value={novoPaciente.localidade}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="uf">Estado</label>
+              <input
+                className="ms-2 border rounded-2"
+                disabled
+                type="text"
+                id="uf"
+                name="uf"
+                value={novoPaciente.uf}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="numero">Número</label>
+              <input
+                className="ms-2 border rounded-2"
+                required
+                type="text"
+                id="numero"
+                name="numero"
+                value={novoPaciente.numero}
+                onChange={handleChange}
+              />{" "}
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="complemento">Complemento</label>
+              <input
+                className="ms-2 border rounded-2"
+                type="text"
+                id="complemento"
+                name="complemento"
+                value={novoPaciente.complemento}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="row mt-3 d-flex justify-content-between">
+            <div className="col-12 mb-1">
+              <label htmlFor="pontoDeReferencia">Ponto de referência</label>
+              <input
+                className="ms-2 border rounded-2"
+                type="text"
+                id="pontoDeReferencia"
+                name="pontoDeReferencia"
+                value={novoPaciente.pontoDeReferencia}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
 
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="nome">Nome completo:</label>
-        <input
-          required
-          autoFocus
-          type="text"
-          name="nome"
-          id="nome"
-          onChange={handleChange}
-          value={novoPaciente.nome}
-          minLength={8}
-          maxLength={64}
-        />
-        <br />
-
-        <label htmlFor="genero">Gênero:</label>
-        <select
-          required
-          name="genero"
-          id="genero"
-          value={novoPaciente.genero}
-          onChange={handleChange}
-        >
-          <option value="">Selecione</option>
-          <option value="masculino">Masculino</option>
-          <option value="feminino">Feminino</option>
-        </select>
-        <br />
-        <label htmlFor="data-nascimento">Data de nascimento:</label>
-        <input
-          required
-          type="date"
-          name="dataDeNascimento"
-          id="dataDeNascimento"
-          value={novoPaciente.dataDeNascimento}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="cpf">CPF:</label>
-        <input
-          required
-          type="text"
-          minLength={11}
-          maxLength={11}
-          placeholder="000.000.000-00"
-          name="cpf"
-          id="cpf"
-          value={novoPaciente.cpf}
-          onChange={handleCpfChange}
-          ref={(el) => (inputRefs.current.cpf = el)}
-        />
-        {errorCpf && <span>CPF já cadastrado no sistema.</span>}
-        <br />
-
-        <label htmlFor="rg">RG com órgão expeditor:</label>
-        <input
-          required
-          type="text"
-          name="rg"
-          id="rg"
-          maxLength={7}
-          value={novoPaciente.rg}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="estadoCivil">Estado civil:</label>
-        <select
-          required
-          name="estadoCivil"
-          id="estadoCivil"
-          value={novoPaciente.estadoCivil}
-          onChange={handleChange}
-        >
-          <option value="">Selecione</option>
-          <option value="solteiro">Solteiro</option>
-          <option value="casado">Casado</option>
-          <option value="divorciado">Divorciado</option>
-          <option value="separado">Separado</option>
-          <option value="viuvo">Viúvo</option>
-        </select>
-        <br />
-
-        <label htmlFor="telefone">Telefone:</label>
-        <input
-          required
-          type="text"
-          id="telefone"
-          name="telefone"
-          minLength={14}
-          maxLength={15}
-          value={novoPaciente.telefone}
-          onChange={handleTelefoneChange}
-          placeholder="(xx) xxxxx-xxxx"
-        />
-        <br />
-
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          value={novoPaciente.email}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="naturalidade">Naturalidade</label>
-        <input
-          required
-          type="text"
-          minLength={8}
-          maxLength={64}
-          name="naturalidade"
-          id="naturalidade"
-          value={novoPaciente.naturalidade}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="contatoDeEmergencia">Contato de emergência</label>
-        <input
-          required
-          type="text"
-          minLength={14}
-          maxLength={15}
-          name="contatoDeEmergencia"
-          id="contatoDeEmergencia"
-          value={novoPaciente.contatoDeEmergencia}
-          onChange={handleTelefoneChange}
-          placeholder="(xx) xxxxx-xxxx"
-        />
-        <br />
-
-        <label htmlFor="alergias">Alergias</label>
-        <input
-          type="text"
-          name="alergias"
-          id="alergias"
-          value={novoPaciente.alergias}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="cuidadosEspecificos">Cuidados específicos</label>
-        <input
-          type="text"
-          name="cuidadosEspecificos"
-          id="cuidadosEspecificos"
-          value={novoPaciente.cuidadosEspecificos}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="convenio">Convênio</label>
-        <input
-          type="text"
-          name="convenio"
-          id="convenio"
-          value={novoPaciente.convenio}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="numeroDoConvenio">Número do convênio</label>
-        <input
-          type="number"
-          name="numeroDoConvenio"
-          id="numeroDoConvenio"
-          value={novoPaciente.numeroDoConvenio}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="validadeDoConvenio">Validade do convênio</label>
-        <input
-          type="date"
-          name="validadeDoConvenio"
-          id="validadeDoConvenio"
-          value={novoPaciente.validadeDoConvenio}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="cep">Cep</label>
-        <input
-          required
-          type="text"
-          name="cep"
-          id="cep"
-          value={novoPaciente.cep}
-          onChange={handleChange}
-          maxLength={8}
-        />
-        {errorCep && <span>Insira um cep válido</span>}
-        <button onClick={handleBuscaCep}>Buscar cep</button>
-        <br />
-        <label htmlFor="logradouro">Rua</label>
-        <input
-          disabled
-          type="text"
-          id="logradouro"
-          name="logradouro"
-          value={novoPaciente.logradouro}
-        />
-        <br />
-
-        <label htmlFor="bairro">Bairro</label>
-        <input
-          disabled
-          type="text"
-          id="bairro"
-          name="bairro"
-          value={novoPaciente.bairro}
-        />
-        <br />
-
-        <label htmlFor="localidade">Cidade</label>
-        <input
-          disabled
-          type="text"
-          id="localidade"
-          name="localidade"
-          value={novoPaciente.localidade}
-        />
-        <br />
-
-        <label htmlFor="uf">Estado</label>
-        <input disabled type="text" id="uf" name="uf" value={novoPaciente.uf} />
-        <br />
-        
-        <label htmlFor="numero">Número</label>
-        <input
-          required
-          type="text"
-          id="numero"
-          name="numero"
-          value={novoPaciente.numero}
-          onChange={handleChange}
-        />
-        <br />
-
-        <label htmlFor="complemento">Complemento</label>
-        <input
-          type="text"
-          id="complemento"
-          name="complemento"
-          value={novoPaciente.complemento}
-          onChange={handleChange}
-        />
-        <label htmlFor="pontoDeReferencia">Ponto de referência</label>
-        <input
-          type="text"
-          id="pontoDeReferencia"
-          name="pontoDeReferencia"
-          value={novoPaciente.pontoDeReferencia}
-          onChange={handleChange}
-        />
-        <br />
-
-        <button type="submit">Enviar</button>
-      </form>
+          <div className="col-12 mt-2">
+            <button
+              className="w-100 btn btn-primary mb-3 transition"
+              type="submit"
+            >
+              Salvar
+            </button>
+          </div>
+          <div className="container w-100 mt-3 mb-0">
+            <div className="row d-flex justify-content-center">
+              <div className="col-4 mb-1 d-flex flex-row-reverse">
+                <button disabled className="btn btn-secondary">
+                  Excluir
+                </button>
+                <button disabled className="me-2 btn btn-secondary">
+                  Editar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

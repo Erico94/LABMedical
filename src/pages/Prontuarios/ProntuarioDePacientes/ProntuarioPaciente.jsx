@@ -20,12 +20,17 @@ export default function ProntuarioPaciente() {
 
   return (
     <>
-      <h1>Paciente : {PacienteSelecionado.nome}</h1>
-      <h3>Convênio : {PacienteSelecionado.convenio}</h3>
-      <h3>Contato de emergência: {PacienteSelecionado.contatoDeEmergencia}</h3>
-      <h3>Alergias : {PacienteSelecionado.alergias}</h3>
-      <h3>Cuidados específicos: {PacienteSelecionado.cuidadosEspecificos}</h3>
+      <div className="container container  border border-secondary rounded-3 mb-3 w-75">
+      <span>Paciente :</span><span className="fs-3 fw-bold"> {PacienteSelecionado.nome}</span>
+      <div className="container ">
+
+      <h4 className="mt-2">Convênio : {PacienteSelecionado.convenio}</h4>
+      <h4 className="mt-2">Contato de emergência: {PacienteSelecionado.contatoDeEmergencia}</h4>
+      <h4 className="mt-2">Alergias : {PacienteSelecionado.alergias}</h4>
+      <h4 className="mt-2 border-bottom border-4 border-secondary pb-2">Cuidados específicos: {PacienteSelecionado.cuidadosEspecificos}</h4>
       <Prontuarios/>
+      </div>
+      </div>
     </>
   );
 }

@@ -6,7 +6,7 @@ import { PacienteContext } from "../../../context/PacienteContext";
 
 export default function ListagemProntuarios() {
   const { PageSetCurrentPage } = useContext(PagesContext);
-  const {SetPaciente} = useContext(PacienteContext);
+  const { SetPaciente } = useContext(PacienteContext);
   const navegue = useNavigate();
   const navigate = useLocation();
   const pathName = navigate.pathname;
@@ -33,39 +33,52 @@ export default function ListagemProntuarios() {
 
   const selecaoDePaciente = (paciente) => {
     SetPaciente(paciente);
-    navegue ("/prontuario-paciente")
+    navegue("/prontuario-paciente");
   };
 
   function inputDeBuscaDePaciente() {
     return (
       <>
         <label htmlFor="nomeOuId">Nome ou id:</label>
-        <input
-          autoFocus
-          type="text"
-          name="nomeOuId"
-          id="nomeOuId"
-          value={termoBuscado}
-          onChange={handleChangeBusca}
-        />
+
+        <div className="row border rounded-2 fs-6 mb-5">
+          <input
+            className="form-control"
+            autoFocus
+            type="text"
+            name="nomeOuId"
+            id="nomeOuId"
+            value={termoBuscado}
+            onChange={handleChangeBusca}
+            placeholder="Digite algo"
+          />
+        </div>
       </>
     );
   }
 
   return (
     <>
-      <h1>Prontuarios</h1>
-      <h3>Selecione um paciente para ver prontuário.</h3>
-      {inputDeBuscaDePaciente()}
-        <ul>
-          {itensFiltrados.map((item, index) => {
-            return (
-              <li key={index} onClick={()=> selecaoDePaciente(item)}>
-                {item.nome}
-              </li>
-            );
-          })}
-        </ul>
+      <div className="container">
+        <div className="row">
+          <span className="fs-3 mt-4 mb-3">
+            Selecione um paciente para ver prontuário.
+          </span>
+        </div>
+        <div>{inputDeBuscaDePaciente()}</div>
+
+        {itensFiltrados.map((item) => {
+          return (
+            <div
+              className="row transition cursor-pointer border border-primary rounded-2 fs-4 my-2 p-2 "
+              style={{ height: "60px" }}
+              onClick={() => selecaoDePaciente(item)}
+            >
+              {item.nome}
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 }

@@ -45,7 +45,6 @@ export default function EditarExame() {
 
   return (
     <>
-      <h1>Editar exame</h1>
       <FormularioDeEdicaoDeExame
         exame={exame}
         paciente={PacienteSelecionado}
