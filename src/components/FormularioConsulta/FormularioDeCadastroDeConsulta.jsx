@@ -1,9 +1,10 @@
-export default function FormularioDeCadastroDeConsulta(
-  novaConsulta,
-  paciente,
-  { handleChangeConsulta },
-  { handleSubmit }
-) {
+export default function FormularioDeCadastroDeConsulta(props) {
+  const novaConsulta = props.novaConsulta;
+  const paciente = props.paciente;
+  const loading = props.loading;
+  const handleChangeConsulta = props.handleChangeConsulta;
+  const handleSubmit = props.handleSubmit;
+
   const handleChange = (event) => {
     handleChangeConsulta(event);
   };
@@ -131,9 +132,23 @@ export default function FormularioDeCadastroDeConsulta(
             </div>
           </div>
           <div className="col-12 mt-2">
-            <button className="w-100 btn btn-primary mb-3" type="submit">
-              Salvar
-            </button>
+            {loading ? (
+              <button
+                class="w-100 btn btn-primary mb-3"
+                type="button"
+                disabled=""
+              >
+                <span
+                  class="spinner-border spinner-border-sm"
+                  aria-hidden="true"
+                ></span>
+                <span role="status">Loading...</span>
+              </button>
+            ) : (
+              <button className="w-100 btn btn-primary mb-3" type="submit">
+                Salvar
+              </button>
+            )}
           </div>
         </form>
       </div>

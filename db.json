@@ -26,11 +26,11 @@
       "contatoDeEmergencia": "(48) 99565-1321",
       "alergias": "Algumas apenas",
       "cuidadosEspecificos": "Nenhum",
-      "convenio": "",
+      "convenio": "Unimed",
       "numeroDoConvenio": "",
       "validadeDoConvenio": "",
       "cep": "85803030",
-      "numero": "1289",
+      "numero": "1288",
       "complemento": "lalala",
       "logradouro": "Rua da Imigração",
       "bairro": "Santa Felicidade",
@@ -181,17 +181,6 @@
       "nomeDoPaciente": "ShaShaSHa",
       "idDoPaciente": 7,
       "id": 1
-    },
-    {
-      "motivoDaConsulta": "csajcncjnkckacs",
-      "dataDaConsulta": "2023-07-30",
-      "horaDaConsulta": "09:35",
-      "descricaoDoProblema": "sdubksbvsvbvisbvbvdbkvsvdb",
-      "medicacaoReceitada": "sdnsdnvkjdsbvkdsbvvsdb",
-      "dosagemEprecaucoes": "jnvkfvudbifudbkjfdbj",
-      "nomeDoPaciente": "ShaShaSHa",
-      "idDoPaciente": 7,
-      "id": 2
     }
   ],
   "exames": [

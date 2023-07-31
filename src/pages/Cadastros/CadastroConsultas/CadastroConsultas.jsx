@@ -4,10 +4,9 @@ import { useEffect, useContext, useState } from "react";
 import { filtrarPacientes, Post } from "../../../service/web";
 import FormularioDeCadastroDeConsulta from "../../../components/FormularioConsulta/FormularioDeCadastroDeConsulta";
 
-//apresentar animação ao salvar
-//descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
-//pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
+
 export default function CadastroConsultas() {
+  const [loading, setLoading] = useState(false);
   const { PageSetCurrentPage } = useContext(PagesContext);
   const navigate = useLocation();
   const pathName = navigate.pathname;
@@ -29,7 +28,6 @@ export default function CadastroConsultas() {
 
   useEffect(() => {
     PageSetCurrentPage(pathName);
-    console.log(pathName);
   }, []);
 
   useEffect(() => {
@@ -84,10 +82,14 @@ export default function CadastroConsultas() {
   };
 
   const handleSubmit = async () => {
-    await Post("consultas", novaConsulta);
-    LimparConsulta();
-    LimparPaciente();
-    setFoiSelecionado(false);
+    setLoading(true);
+    setTimeout(async() => {
+      await Post("consultas", novaConsulta);
+      LimparConsulta();
+      LimparPaciente();
+      setFoiSelecionado(false);
+      setLoading(false);
+    }, 3000);
   };
 
   const selecaoDePaciente = (paciente) => {
@@ -102,7 +104,7 @@ export default function CadastroConsultas() {
 
         <div className="row border rounded-2 fs-6 mb-5">
           <input
-          className="form-control"
+            className="form-control"
             autoFocus
             type="text"
             name="nomeOuId"
@@ -121,7 +123,9 @@ export default function CadastroConsultas() {
       <div className="container">
         <div className="row mt-5">
           {!foiSelecionado && (
-            <span className="fs-4 mb-3">Selecione um paciente para cadastrar uma nova consulta. </span>
+            <span className="fs-4 mb-3">
+              Selecione um paciente para cadastrar uma nova consulta.{" "}
+            </span>
           )}
         </div>
         <div className="">{!foiSelecionado && inputDeBuscaDePaciente()}</div>
@@ -138,13 +142,15 @@ export default function CadastroConsultas() {
             );
           })}
       </div>
-      {foiSelecionado &&
-        FormularioDeCadastroDeConsulta(
-          { novaConsulta },
-          pacienteSelecionado,
-          { handleChangeConsulta },
-          { handleSubmit }
-        )}
+      {foiSelecionado && (
+        <FormularioDeCadastroDeConsulta
+          novaConsulta={novaConsulta}
+          paciente={pacienteSelecionado}
+          loading={loading}
+          handleChangeConsulta={handleChangeConsulta}
+          handleSubmit={handleSubmit}
+        />
+      )}
     </>
   );
 }

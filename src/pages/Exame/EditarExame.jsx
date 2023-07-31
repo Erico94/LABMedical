@@ -1,4 +1,3 @@
-
 import FormularioDeEdicaoDeExame from "../../components/FormularioExame/FormularioDeEdicaoDeExame";
 import { PacienteContext } from "../../context/PacienteContext";
 import { PagesContext } from "../../context/PagesContext";
@@ -8,6 +7,7 @@ import { Put } from "../../service/web";
 import { Delete } from "../../service/web";
 
 export default function EditarExame() {
+  const [loading, setLoading] = useState(false);
   const { PageSetCurrentPage } = useContext(PagesContext);
   const { PacienteSelecionado } = useContext(PacienteContext);
   const navigate = useLocation();
@@ -18,7 +18,6 @@ export default function EditarExame() {
 
   useEffect(() => {
     PageSetCurrentPage(pathName);
-    console.log(pathName);
   }, []);
 
   const handleEditExame = (event) => {
@@ -29,30 +28,35 @@ export default function EditarExame() {
   };
 
   const handleSubmit = async () => {
-    console.log(exame);
-    await Put(`exames/${exame.id}`, exame);
-    setEditar(false);
+    setLoading(true);
+    setTimeout(async () => {
+      await Put(`exames/${exame.id}`, exame);
+      setEditar(false);
+      setLoading(false);
+    }, 4000);
   };
 
   const handleDeleteExame = async () => {
-    console.log('Deletar exame');
-    await Delete (`exames/${exame.id}`).then(()=>navegue('/prontuario-paciente'));
-  }
+    await Delete(`exames/${exame.id}`).then(() =>
+      navegue("/prontuario-paciente")
+    );
+  };
 
-  const handleEditar = () =>{
+  const handleEditar = () => {
     setEditar(true);
-  }
+  };
 
   return (
     <>
       <FormularioDeEdicaoDeExame
+        loading={loading}
         exame={exame}
         paciente={PacienteSelecionado}
         handleEditExame={handleEditExame}
         handleSubmit={handleSubmit}
-        handleDeleteExame = {handleDeleteExame}
-        handleEditar = {handleEditar}
-        editar = {editar}
+        handleDeleteExame={handleDeleteExame}
+        handleEditar={handleEditar}
+        editar={editar}
       />
     </>
   );

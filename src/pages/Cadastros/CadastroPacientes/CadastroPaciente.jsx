@@ -1,14 +1,15 @@
-// Deverá apresentar animação ao salvar.
-//Após salvar, direcionar para página inicial, se nao salvar manter nesta page
-//ao salvar aparecem tres alerts
+
+
 import { buscaCep } from "../../../service/Cep";
 import { verificaCpf, Post } from "../../../service/web";
 import { PagesContext } from "../../../context/PagesContext";
 import { formatarCPF, formatarTelefone } from "../../../service/Cadastro";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect, useContext } from "react";
 
 export default function CadastroPaciente() {
+  const navegue = useNavigate();
+  const [loading, setLoading] = useState(false);
   const { PageSetCurrentPage } = useContext(PagesContext);
   const navigate = useLocation();
   const pathName = navigate.pathname;
@@ -43,7 +44,6 @@ export default function CadastroPaciente() {
 
   useEffect(() => {
     PageSetCurrentPage(pathName);
-    console.log(pathName);
   }, []);
 
   const handleTelefoneChange = (event) => {
@@ -108,9 +108,12 @@ export default function CadastroPaciente() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await Post("pacientes", novoPaciente)
-      .then(() => alert("Paciente cadastrado com sucesso"))
-      .catch(alert("Erro ao inserir paciente na base de dados."));
+    setLoading(true);
+    setTimeout(async() => {
+      await Post("pacientes", novoPaciente);
+      setLoading(false);
+    }, 4000);
+   
   };
 
   return (
@@ -366,7 +369,6 @@ export default function CadastroPaciente() {
               >
                 Buscar cep
               </button>
-              
             </div>
             {errorCep && <span>Insira um cep válido</span>}
           </div>
@@ -464,12 +466,22 @@ export default function CadastroPaciente() {
           </div>
 
           <div className="col-12 mt-2">
-            <button
-              className="w-100 btn btn-primary mb-3 transition"
-              type="submit"
-            >
-              Salvar
-            </button>
+            {loading ? (
+              <button class="w-100 btn btn-primary mb-3" type="button" disabled="">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  aria-hidden="true"
+                ></span>
+                <span role="status">Loading...</span>
+              </button>
+            ) : (
+              <button
+                className="w-100 btn btn-primary mb-3 transition"
+                type="submit"
+              >
+                Salvar
+              </button>
+            )}
           </div>
           <div className="container w-100 mt-3 mb-0">
             <div className="row d-flex justify-content-center">

@@ -58,7 +58,6 @@ export default function Home() {
 
   useEffect(() => {
     PageSetCurrentPage(pathName);
-    console.log(pathName);
     async function obterTotais() {
       setTotalPacientes(
         await GetAll("pacientes").then((response) => response.length)

@@ -1,4 +1,5 @@
 export default function FormularioDeEdicaoDeConsulta(props) {
+  const loading = props.loading;
   const consulta = props.consulta;
   const paciente = props.paciente;
   const handleEditConsulta = props.handleEditConsulta;
@@ -150,9 +151,23 @@ export default function FormularioDeEdicaoDeConsulta(props) {
             </div>
           </div>
           <div className="col-12 mt-2">
-          <button disabled={editar ? false : true} className="w-100 btn btn-primary mb-3"  type="submit">
-            Salvar
-          </button>
+            {loading ? (
+              <button className="w-100 btn btn-primary mb-3" type="button" disabled="">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  aria-hidden="true"
+                ></span>
+                <span role="status">Loading...</span>
+              </button>
+            ) : (
+              <button
+                disabled={editar ? false : true}
+                className="w-100 btn btn-primary mb-3"
+                type="submit"
+              >
+                Salvar
+              </button>
+            )}
           </div>
         </form>
       </div>

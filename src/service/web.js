@@ -15,7 +15,6 @@ export async function verificaEmail(email) {
     const response = await fetch(`${Url_api}/usuarios`);
     const usuarios = await response.json();
     const usuario = usuarios.find(usuario => usuario.email === email);
-    console.log(usuario);
     return usuario;
 }
 
@@ -32,6 +31,13 @@ export async function verificaCpf(ondVerificar,cpf) {
   const usuario = usuarios.find(usuario => usuario.cpf === cpf);
   return usuario;
 }
+
+export async function verificaCore(coren) {
+    const response = await fetch(`${Url_api}/usuarios`);
+    const usuarios = await response.json();
+    const usuario = usuarios.find(usuario => usuario.corenUf === coren);
+    return usuario;
+  }
 
 export async function Post( ondePostar,data ) {
     const dados = JSON.stringify(data);
@@ -115,13 +121,3 @@ export async function GetAllExamesOuConsultas (ondeBuscar, id){
       );
     return filtro;
 }
-
-// export async function encontrarConsulta(id) {
-//     var getAll = [];
-//     const response = await fetch(`${Url_api}/consultas`).then((data)=>data.json());
-//     response.map((item)=>{
-//         getAll.push(item);
-//     })
-//     const filtro = getAll.find((item)=>item.id == id);
-//     return filtro;
-// }

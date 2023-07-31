@@ -10,6 +10,7 @@ import { Put } from "../../service/web";
 import { Delete } from "../../service/web";
 
 export default function EditarPaciente() {
+  const [loading, setLoading] = useState(false);
   const { PageSetCurrentPage } = useContext(PagesContext);
   const { PacienteSelecionado, SetPaciente } = useContext(PacienteContext);
   const navegue = useNavigate();
@@ -20,7 +21,6 @@ export default function EditarPaciente() {
 
   useEffect(() => {
     PageSetCurrentPage(pathName);
-    console.log(pathName);
   }, []);
 
   const handleChange = (event) => {
@@ -65,11 +65,16 @@ export default function EditarPaciente() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await Put(`pacientes/${PacienteSelecionado.id}`, PacienteSelecionado).then(
-      () => {
-        setEditar(false);
-      }
-    );
+    setLoading(true);
+    setTimeout(async() => {
+      await Put(`pacientes/${PacienteSelecionado.id}`, PacienteSelecionado).then(
+        () => {
+          setEditar(false);
+          setLoading(false);
+        }
+      );
+    }, 4000);
+    
   };
 
   const handleEditarUsuario = () => {
@@ -77,7 +82,6 @@ export default function EditarPaciente() {
   };
 
   const handleApagarUsuario = async () => {
-    console.log("Deletar usuario");
     const quantidadeDeExames = await GetAllExamesOuConsultas(
       "exames",
       PacienteSelecionado.id
@@ -94,8 +98,6 @@ export default function EditarPaciente() {
       alert(
         "Não foi possível excluir cadastro pois ainda constam exames ou consultas cadastradas."
       );
-      console.log(quantidadeDeConsultas);
-      console.log(quantidadeDeExames);
     }
   };
   return (
@@ -228,7 +230,7 @@ export default function EditarPaciente() {
             <div className="col-12 mb-4">
               <label htmlFor="telefone">Telefone:</label>
               <input
-              className="form-control"
+                className="form-control"
                 disabled={editar ? false : true}
                 required
                 type="text"
@@ -475,10 +477,23 @@ export default function EditarPaciente() {
             value={PacienteSelecionado.pontoDeReferencia}
             onChange={handleChange}
           />
-          <br />
-          <button className="btn btn-primary w-100 mb-2" type="submit" disabled={editar ? false : true}>
-            Salvar
-          </button>
+          {loading ? (
+            <button class="btn btn-primary mt-5 w-100 mb-2" type="button" disabled="">
+              <span
+                class="spinner-border spinner-border-sm"
+                aria-hidden="true"
+              ></span>
+              <span role="status">Loading...</span>
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary mt-5 w-100 mb-2"
+              type="submit"
+              disabled={editar ? false : true}
+            >
+              Salvar
+            </button>
+          )}
         </form>
       </div>
     </>

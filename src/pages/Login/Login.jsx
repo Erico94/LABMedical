@@ -4,18 +4,18 @@ import { login } from "../../service/web";
 import { AuthContext } from "../../context/AuthContext";
 import wepik from "../../../Imagens/wepik.png";
 
-//Definir no css o pointer:cursor no elemento "esqueci minha senha"
-//inserir aviso "usuaio ou senha inválidos"
 export default function FormularioLogin() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const navigate = useNavigate();
   const { Authlogin } = useContext(AuthContext);
   const [errorLogin, setErrorLogin] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setErrorLogin(false);
   }, [email, senha]);
+
 
   const esqueciSenha = () => {
     alert("Esta funcionalidade ainda está em desenvolvimento.");
@@ -35,14 +35,19 @@ export default function FormularioLogin() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const usuario = await login(email, senha);
+    setLoading(true);
+    setTimeout(async() => {
+      const usuario = await login(email, senha);
     if (!usuario) {
+      setLoading(false)
       setErrorLogin(true);
       return;
     }
     Authlogin(usuario);
     navigate("/");
+    }, 2000);
+
+    
   };
 
   return (
@@ -107,7 +112,10 @@ export default function FormularioLogin() {
                 </div>
                 {errorLogin && <span>Email ou senha inválidos</span>}
                 <div className="row w-100 px-5 mb-1 mt-5">
-                  <button type="submit" className="btn btn-primary transition">Entrar</button>
+                  {loading ? <button class="btn btn-primary" type="button" disabled="">
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span role="status">Loading...</span>
+    </button> : <button type="submit" className="btn btn-primary transition">Entrar</button>}
                 </div>
                 <div className="row">
                 <a

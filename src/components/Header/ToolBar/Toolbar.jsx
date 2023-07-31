@@ -4,8 +4,6 @@ import profileIcon from "../../../../Imagens/profileIcon.png";
 import "./styles.css";
 import { PagesContext } from "../../../context/PagesContext";
 
-// titulo da pagina atual
-// opcional botao de sair e dropdown
 export default function Toolbar() {
   const { usuarioLogado } = useContext(AuthContext);
   const { currentPage } = useContext(PagesContext);

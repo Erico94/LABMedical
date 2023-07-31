@@ -12,7 +12,6 @@ export default function ProntuarioPaciente() {
 
   useEffect(() => {
     PageSetCurrentPage(pathName);
-    console.log(pathName);
   }, []);
 
 

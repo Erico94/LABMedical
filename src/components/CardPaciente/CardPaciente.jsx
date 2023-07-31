@@ -3,7 +3,6 @@ import { calcularIdade } from "../../service/Cadastro";
 
 export default function CardPaciente(props) {
   const paciente = props.paciente;
-  // const idade  = calcularIdade(paciente.dataDeNascimento);
 
   return (
     <>

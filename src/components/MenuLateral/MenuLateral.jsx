@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import "./styles.css";
 
-//Esconder este menu na página de login!
 
 export default function MenuLateral() {
   const { AuthLogout } = useContext(AuthContext);

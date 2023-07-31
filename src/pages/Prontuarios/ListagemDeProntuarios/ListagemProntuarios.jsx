@@ -16,7 +16,6 @@ export default function ListagemProntuarios() {
 
   useEffect(() => {
     PageSetCurrentPage(pathName);
-    console.log(pathName);
   }, []);
 
   useEffect(() => {

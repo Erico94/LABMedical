@@ -1,9 +1,10 @@
-export default function FormularioDeCadastroDeExame(
-  novoExame,
-  paciente,
-  { handleChangeExame },
-  { handleSubmit }
-) {
+export default function FormularioDeCadastroDeExame(props) {
+  const loading = props.loading;
+  const novoExame = props.novoExame;
+  const paciente = props.paciente;
+  const handleChangeExame = props.handleChangeExame;
+  const handleSubmit = props.handleSubmit;
+
   const handleChange = (event) => {
     handleChangeExame(event);
   };
@@ -145,9 +146,19 @@ export default function FormularioDeCadastroDeExame(
             </div>
           </div>
           <div className="col-12 mt-2">
-            <button className="w-100 btn btn-primary mb-3" type="submit">
-              Salvar
-            </button>
+            {loading ? (
+              <button className="w-100 btn btn-primary mb-3" type="button" disabled="">
+                <span
+                  class="spinner-border spinner-border-sm"
+                  aria-hidden="true"
+                ></span>
+                <span role="status">Loading...</span>
+              </button>
+            ) : (
+              <button className="w-100 btn btn-primary mb-3" type="submit">
+                Salvar
+              </button>
+            )}
           </div>
         </form>
       </div>

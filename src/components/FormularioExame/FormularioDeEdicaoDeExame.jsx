@@ -1,4 +1,5 @@
 export default function FormularioDeEdicaoDeExame(props) {
+  const loading = props.loading;
   const exame = props.exame;
   const paciente = props.paciente;
   const handleEditExame = props.handleEditExame;
@@ -170,9 +171,23 @@ export default function FormularioDeEdicaoDeExame(props) {
               ></textarea>
             </div>
           </div>
-          <button disabled={editar ? false : true} className="w-100 btn btn-primary mb-3"  type="submit">
-            Salvar
-          </button>
+          {loading ? (
+            <button className="w-100 btn btn-primary mb-3" type="button" disabled="">
+              <span
+                class="spinner-border spinner-border-sm"
+                aria-hidden="true"
+              ></span>
+              <span role="status">Loading...</span>
+            </button>
+          ) : (
+            <button
+              disabled={editar ? false : true}
+              className="w-100 btn btn-primary mb-3"
+              type="submit"
+            >
+              Salvar
+            </button>
+          )}
         </form>
       </div>
     </>

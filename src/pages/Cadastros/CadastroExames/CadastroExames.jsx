@@ -4,11 +4,8 @@ import { useEffect, useContext, useState } from "react";
 import { filtrarPacientes, Post } from "../../../service/web";
 import FormularioDeCadastroDeExame from "../../../components/FormularioExame/FormularioDeCadastroDeExame";
 
-// Talvez criar uma página de "solicitação concluida com sucesso" que aparece após algum cadastro e com botões para retornar à pagina inicial.
-//apresentar animação ao salvar
-//descobrir pq que as vzes não salva na primeira submissão... Já verifiquei e aparentemente parece ser um bug do json server que cria umnovo arquivo json.
-//pra resolver qundo nao insere no jsn, criar verifiação que aosubmeter form, verifica se consta no json, se sim salvou, se n => alert de erro
 export default function CadastroExames() {
+  const [loading, setLoading] = useState(false);
   const { PageSetCurrentPage } = useContext(PagesContext);
   const navigate = useLocation();
   const pathName = navigate.pathname;
@@ -31,7 +28,6 @@ export default function CadastroExames() {
 
   useEffect(() => {
     PageSetCurrentPage(pathName);
-    console.log(pathName);
   }, []);
 
   useEffect(() => {
@@ -87,10 +83,15 @@ export default function CadastroExames() {
   };
 
   const handleSubmit = async () => {
-    await Post("exames", novoExame);
-    LimparExame();
-    LimparPaciente();
-    setFoiSelecionado(false);
+    setLoading(true);
+    setTimeout(async () => {
+      await Post("exames", novoExame);
+      LimparExame();
+      LimparPaciente();
+      setLoading(false);
+      setFoiSelecionado(false);
+    }, 4000);
+    
   };
 
   const selecaoDePaciente = (paciente) => {
@@ -105,8 +106,8 @@ export default function CadastroExames() {
 
         <div className="row border rounded-2 fs-6 mb-5">
           <input
-          className="form-control"
-          placeholder="Digite algo"
+            className="form-control"
+            placeholder="Digite algo"
             autoFocus
             type="text"
             name="nomeOuId"
@@ -124,7 +125,9 @@ export default function CadastroExames() {
       <div className="container">
         <div className="row">
           {!foiSelecionado && (
-            <span className="fs-3 mt-4 mb-3">Selecione um paciente para cadastrar um novo exame. </span>
+            <span className="fs-3 mt-4 mb-3">
+              Selecione um paciente para cadastrar um novo exame.{" "}
+            </span>
           )}
         </div>
         <div className="">{!foiSelecionado && inputDeBuscaDePaciente()}</div>
@@ -142,13 +145,15 @@ export default function CadastroExames() {
             );
           })}
       </div>
-      {foiSelecionado &&
-        FormularioDeCadastroDeExame(
-          { novoExame },
-          pacienteSelecionado,
-          { handleChangeExame },
-          { handleSubmit }
-        )}
+      {foiSelecionado && (
+        <FormularioDeCadastroDeExame
+          loading = {loading}
+          novoExame={novoExame}
+          paciente={pacienteSelecionado}
+          handleChangeExame={handleChangeExame}
+          handleSubmit={handleSubmit}
+        />
+      )}
     </>
   );
 }
