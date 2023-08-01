@@ -1,0 +1,17 @@
+.toolbar{
+    background-color: #0D6EFE;
+    
+}
+
+.imagem-perfil{
+    width: 60px;
+}
+
+.usuario{
+    display: flex;
+    align-items: center;
+}
+
+.nome{
+    margin-right: 15px;
+}
