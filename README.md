@@ -22,3 +22,9 @@ Tela de login de usuário com links para redefinir senha e para a página de cad
 
 ![image](https://github.com/Erico94/LABMedical/assets/42593665/e1208937-bed8-403c-af7c-d9253286ac5c)
 Página inicial com dados esatísticos do programa, como quantidade de exames, consultas e de pacientes cadastrados, também a listagem de pacientes e uma busca rápida, seja por nome, id ou email.
+
+Para desenvolvimento deste software utilizei das seguintes ferramentas e tecnoligias: Visual Studio Code, Node.js, Vite, Bootstrap e Json Server, abaixo demonstro os passos para que consiga rodar o programa em sua máquina:
+#
+#
+1 - Selecione o sistema operacional e baixe o visual studio code, segue o link do download: https://code.visualstudio.com/download
+
