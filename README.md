@@ -27,4 +27,8 @@ Para desenvolvimento deste software utilizei das seguintes ferramentas e tecnoli
 #
 #
 1 - Selecione o sistema operacional e baixe o visual studio code, segue o link do download: https://code.visualstudio.com/download
+#
+2 - Vá para o site oficial do Node.js (https://nodejs.org) e faça o download da versão mais recente do Node.js para o seu sistema operacional (Windows, macOS ou Linux). Faremos o uso do npm (Node Package Manager), que é baixado e instalado automaticamente junto com o Node.js.
+#
+3 - Clone o repositório deste projeto, link : 
 
